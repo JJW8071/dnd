@@ -9,7 +9,7 @@ class DND:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(pass_context=True, invoke_without_command=True)
+    @commands.group(pass_context=True, invoke_without_command=False)
     async def dnd(self, ctx, *, hargs=''):
         if ctx.invoked_subcommand is None:
             await self.bot.say('DEBUG: hargs = '+ hargs)
