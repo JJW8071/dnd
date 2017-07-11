@@ -49,8 +49,10 @@ class DND:
 
     def _get_file(url):
         async with aiohttp.ClientSession() as session:
-            async with session.get(attachment['url']) as response:
+            async with session.get(url) as response:
                 file_txt = await response.text()
+                if file_txt is not None:
+                    await self.bot.say('DEBUG: Got the file.')
 
 
 def setup(bot):
