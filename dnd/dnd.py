@@ -11,12 +11,12 @@ class DND:
         self.bot = bot
 
     @commands.group(pass_context=True)
-    async def dnd(self, ctx, *, hargs=''):
+    async def dnd(self, ctx, *, hargs=''.:
         if ctx.invoked_subcommand is None:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(name='Spells',aliases=('spells'))
+    @dnd.command(name='spells')
     async def __lookup__spells(self, hargs):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
@@ -24,7 +24,7 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(name='Classes')
+    @dnd.command(name='classes')
     async def __lookup__classes(self, hargs):
         """Lookup Classes"""
         baseurl = self.baseurl+'classes'
@@ -32,7 +32,7 @@ class DND:
         await self.bot.say("Lookup Classes initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(name='Monsters')
+    @dnd.command(name='monsters')
     async def __lookup__monsters(self, hargs):
         """Lookup Monsters"""
         baseurl = self.baseurl+'monsters'
@@ -40,7 +40,7 @@ class DND:
         await self.bot.say("Lookup Monsters initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(name='Equipment')
+    @dnd.command(name='equipment')
     async def __lookup__equipment(self, hargs):
         """Lookup Equpiment"""
         baseurl = self.baseurl+'equipment'
