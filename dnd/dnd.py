@@ -15,7 +15,7 @@ class DND:
             await self.bot.say('DEBUG: hargs = '+ hargs)
             return
 
-    @dnd.command(aliases=['spells'])
+    @dnd.command(aliases=['spells',])
     async def _spells(self, hargs):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
@@ -23,7 +23,7 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases='classes')
+    @dnd.command(aliases=['classes'],)
     async def _classes(self, hargs):
         """Lookup Classes"""
         baseurl = self.baseurl+'classes'
@@ -31,7 +31,7 @@ class DND:
         await self.bot.say("Lookup Classes initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases='monsters')
+    @dnd.command(aliases=['monsters'],)
     async def _monsters(self, hargs):
         """Lookup Monsters"""
         baseurl = self.baseurl+'monsters'
@@ -39,7 +39,7 @@ class DND:
         await self.bot.say("Lookup Monsters initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases='equpiment')
+    @dnd.command(aliases=['equpiment'],)
     async def _equipment(self, hargs):
         """Lookup Equpiment"""
         baseurl = self.baseurl+'equipment'
