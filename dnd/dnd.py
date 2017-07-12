@@ -22,7 +22,7 @@ class DND:
         '''Lookup Spells'''
         url = '{}{}'.format(BASEURL, 'spells')
         print(url)
-        await self.bot say('URL lookup: '+url)
+        await self.bot.say('URL lookup: '+url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
         file_txt = _get_file(url)
