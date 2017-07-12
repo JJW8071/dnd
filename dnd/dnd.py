@@ -22,7 +22,7 @@ class DND:
         baseurl = self.baseurl+'spells'
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
-        file_txt = _get_file(baseurl)
+        file_txt = self._get_file(baseurl)
         if file_txt is not None:
             await self.bot.say('Debug: Text file arrived.')
 
