@@ -54,7 +54,7 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-async def _get_file(self, url):
+async def _get_file(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             file_txt = await response.text()
