@@ -24,7 +24,7 @@ class DND:
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
         print(baseurl)
-        file_txt = self._get_file(baseurl)
+        file_txt = _get_file(baseurl)
         if file_txt is not None:
             print(file_text)
             await self.bot.say('Debug: Text file arrived.')
@@ -53,12 +53,12 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    async def _get_file(self, url):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                file_txt = await response.text()
-                if file_txt is not None:
-                    return file_txt
+async def _get_file(self, url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            file_txt = await response.text()
+            if file_txt is not None:
+                return file_txt
 
 
 def setup(bot):
