@@ -16,7 +16,7 @@ class DND:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(aliases=['Spells','Spell'],)
+    @dnd.command(aliases=[])
     async def spells(self, hargs):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
@@ -24,7 +24,7 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases=[''],)
+    @dnd.command(aliases=[])
     async def classes(self, hargs):
         """Lookup Classes"""
         baseurl = self.baseurl+'classes'
@@ -32,7 +32,7 @@ class DND:
         await self.bot.say("Lookup Classes initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases=[''],)
+    @dnd.command(aliases=[])
     async def monsters(self, hargs):
         """Lookup Monsters"""
         baseurl = self.baseurl+'monsters'
@@ -40,7 +40,7 @@ class DND:
         await self.bot.say("Lookup Monsters initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases=[''],)
+    @dnd.command(aliases=[])
     async def equipment(self, hargs):
         """Lookup Equpiment"""
         baseurl = self.baseurl+'equipment'
