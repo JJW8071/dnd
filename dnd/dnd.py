@@ -12,8 +12,7 @@ class DND:
 
     @commands.group(pass_context=True)
     async def dnd(self, ctx):
-        if ctx.invoked_subcommand is None or \
-                isinstance(ctx.invoked_subcommand, commands.group):
+        if ctx.invoked_subcommand is None:
             await send_cmd_help(ctx)
             return
 
