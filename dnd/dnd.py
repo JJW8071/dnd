@@ -22,7 +22,9 @@ class DND:
         baseurl = self.baseurl+'spells'
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
-        await self.bot.say("<{}>".format(baseurl))
+        file_txt = _get_file(baseurl)
+        if file_txt is not None:
+            await self.bot.say('Debug: Text file arrived.')
 
     @dnd.command(name='classes')
     async def lookup_classes(self, klass=None):
@@ -53,7 +55,7 @@ class DND:
             async with session.get(url) as response:
                 file_txt = await response.text()
                 if file_txt is not None:
-                    await self.bot.say('DEBUG: Got the file.')
+                    return file_txt
 
 
 def setup(bot):
