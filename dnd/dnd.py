@@ -18,7 +18,7 @@ class DND:
             return
 
     @dnd.command(name='spells')
-    async def lookup_spells(spell=None):
+    async def lookup_spells(self, spell=None):
         '''Lookup Spells'''
         baseurl = BASEURL+'spells'
         #Your code will go here
