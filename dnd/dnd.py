@@ -25,10 +25,10 @@ class DND:
         await self.bot say('URL lookup: {}'.format(url))
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
-        file_txt = _get_file(url)
-        if file_txt is not None:
-            print(file_text)
-            await self.bot.say('Debug: Text file arrived.')
+        # file_txt = _get_file(url)
+        # if file_txt is not None:
+        #     print(file_text)
+        #     await self.bot.say('Debug: Text file arrived.')
 
     @dnd.command(name='classes')
     async def lookup_classes(self, klass=None):
