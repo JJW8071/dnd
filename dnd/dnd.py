@@ -16,7 +16,7 @@ class DND:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(name='Spells')
+    @dnd.command(name='Spells',aliases=('spells'))
     async def __lookup__spells(self, hargs):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
