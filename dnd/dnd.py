@@ -17,13 +17,15 @@ class DND:
             return
 
     @dnd.command(name='spells')
-    async def lookup_spells(self, spell=None):
+    async def lookup_spells(spell=None):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
+        print(baseurl)
         file_txt = self._get_file(baseurl)
         if file_txt is not None:
+            print(file_text)
             await self.bot.say('Debug: Text file arrived.')
 
     @dnd.command(name='classes')
@@ -50,7 +52,7 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    async def _get_file(url):
+    async def _get_file(self, url):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 file_txt = await response.text()
