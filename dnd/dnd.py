@@ -12,7 +12,7 @@ class DND:
     @commands.group(pass_context=True)
     async def dnd(self, ctx, *, hargs=''):
         if ctx.invoked_subcommand is None:
-            await self.bot.say('DEBUG: hargs = '+ hargs)
+            await send_cmd_help(ctx)
             return
 
     @dnd.command(aliases=['spells',])
