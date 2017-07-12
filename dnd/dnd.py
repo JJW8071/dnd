@@ -27,8 +27,16 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         file_txt = _get_file(url)
         if file_txt is not None:
-            print(file_text)
+            print(file_txt)
             await self.bot.say('Debug: Text file arrived.')
+
+async def _get_file(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            print('_get_file('+url+')')
+            file_txt = await response.text()
+            if file_txt is not None:
+                return file_txt
 
     @dnd.command(name='classes')
     async def lookup_classes(self, klass=None):
@@ -54,12 +62,6 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-async def _get_file(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            file_txt = await response.text()
-            if file_txt is not None:
-                return file_txt
 
 
 def setup(bot):
