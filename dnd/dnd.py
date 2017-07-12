@@ -20,7 +20,7 @@ class DND:
     @dnd.command(name='spells')
     async def lookup_spells(self, spell=None):
         '''Lookup Spells'''
-        url = '{}'.format(BASEURL, 'spells')
+        url = '{}{}'.format(BASEURL, 'spells')
         print(url)
         await self.bot say('URL lookup: {}'.format(url))
         #Your code will go here
