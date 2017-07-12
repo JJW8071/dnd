@@ -20,11 +20,11 @@ class DND:
     @dnd.command(name='spells')
     async def lookup_spells(self, spell=None):
         '''Lookup Spells'''
-        baseurl = BASEURL+'spells'
+        url = BASEURL+'spells'
+        print(url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
-        print(baseurl)
-        file_txt = _get_file(baseurl)
+        file_txt = _get_file(url)
         if file_txt is not None:
             print(file_text)
             await self.bot.say('Debug: Text file arrived.')
