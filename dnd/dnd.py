@@ -17,7 +17,7 @@ class DND:
             return
 
     @dnd.command(name='spells')
-    async def __lookup__spells(self, hargs):
+    async def lookup_spells(self, hargs):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
         #Your code will go here
@@ -25,7 +25,7 @@ class DND:
         await self.bot.say("<{}>".format(baseurl))
 
     @dnd.command(name='classes')
-    async def __lookup__classes(self, hargs):
+    async def lookup_classes(self, hargs):
         """Lookup Classes"""
         baseurl = self.baseurl+'classes'
         #Your code will go here
@@ -33,7 +33,7 @@ class DND:
         await self.bot.say("<{}>".format(baseurl))
 
     @dnd.command(name='monsters')
-    async def __lookup__monsters(self, hargs):
+    async def lookup_monsters(self, hargs):
         """Lookup Monsters"""
         baseurl = self.baseurl+'monsters'
         #Your code will go here
@@ -41,7 +41,7 @@ class DND:
         await self.bot.say("<{}>".format(baseurl))
 
     @dnd.command(name='equipment')
-    async def __lookup__equipment(self, hargs):
+    async def lookup_equipment(self, hargs):
         """Lookup Equpiment"""
         baseurl = self.baseurl+'equipment'
         #Your code will go here
