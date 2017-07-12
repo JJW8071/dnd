@@ -3,9 +3,10 @@ import aiohttp
 from __main__ import send_cmd_help
 from discord.ext import commands
 
+BASEURL = 'http://dnd5eapi.co/api/'
+
 class DND:
-    """D&D Lookup Stuff"""
-    baseurl = "http://dnd5eapi.co/api/"
+    '''D&D Lookup Stuff'''
 
     def __init__(self, bot):
         self.bot = bot
@@ -18,8 +19,8 @@ class DND:
 
     @dnd.command(name='spells')
     async def lookup_spells(spell=None):
-        """Lookup Spells"""
-        baseurl = self.baseurl+'spells'
+        '''Lookup Spells'''
+        baseurl = BASEURL+'spells'
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
         print(baseurl)
@@ -30,24 +31,24 @@ class DND:
 
     @dnd.command(name='classes')
     async def lookup_classes(self, klass=None):
-        """Lookup Classes"""
-        baseurl = self.baseurl+'classes'
+        '''Lookup Classes'''
+        baseurl = BASEURL+'classes'
         #Your code will go here
         await self.bot.say("Lookup Classes initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
     @dnd.command(name='monsters')
     async def lookup_monsters(self, monster=None):
-        """Lookup Monsters"""
-        baseurl = self.baseurl+'monsters'
+        '''Lookup Monsters'''
+        baseurl = BASEURL+'monsters'
         #Your code will go here
         await self.bot.say("Lookup Monsters initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
     @dnd.command(name='equipment')
     async def lookup_equipment(self, equiped=None):
-        """Lookup Equpiment"""
-        baseurl = self.baseurl+'equipment'
+        '''Lookup Equpiment'''
+        baseurl = BASEURL+'equipment'
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
