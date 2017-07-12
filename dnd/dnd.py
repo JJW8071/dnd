@@ -1,5 +1,6 @@
 import discord
 import aiohttp
+from __main__ import send_cmd_help
 from discord.ext import commands
 
 class DND:
