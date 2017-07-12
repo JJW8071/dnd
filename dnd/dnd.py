@@ -22,7 +22,7 @@ class DND:
         '''Lookup Spells'''
         url = '{}{}'.format(BASEURL, 'spells')
         print(url)
-        await self.bot say('URL lookup: '+url')
+        await self.bot say('URL lookup: '+url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
         file_txt = _get_file(url)
@@ -54,7 +54,7 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-async def _get_file(self, url: str):
+async def _get_file(self, url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             file_txt = await response.text()
