@@ -11,7 +11,7 @@ class DND:
         self.bot = bot
 
     @commands.group(pass_context=True)
-    async def dnd(self, ctx, *, hargs=''.:
+    async def dnd(self, ctx, *, hargs=''):
         if ctx.invoked_subcommand is None:
             await send_cmd_help(ctx)
             return
