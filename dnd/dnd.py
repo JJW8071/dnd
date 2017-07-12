@@ -16,32 +16,32 @@ class DND:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(aliases=[])
-    async def spells(self, hargs):
+    @dnd.command(name='Spells')
+    async def __lookup__spells(self, hargs):
         """Lookup Spells"""
         baseurl = self.baseurl+'spells'
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases=[])
-    async def classes(self, hargs):
+    @dnd.command(name='Classes')
+    async def __lookup__classes(self, hargs):
         """Lookup Classes"""
         baseurl = self.baseurl+'classes'
         #Your code will go here
         await self.bot.say("Lookup Classes initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases=[])
-    async def monsters(self, hargs):
+    @dnd.command(name='Monsters')
+    async def __lookup__monsters(self, hargs):
         """Lookup Monsters"""
         baseurl = self.baseurl+'monsters'
         #Your code will go here
         await self.bot.say("Lookup Monsters initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
-    @dnd.command(aliases=[])
-    async def equipment(self, hargs):
+    @dnd.command(name='Equipment')
+    async def __lookup__equipment(self, hargs):
         """Lookup Equpiment"""
         baseurl = self.baseurl+'equipment'
         #Your code will go here
