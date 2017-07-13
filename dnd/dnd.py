@@ -27,7 +27,7 @@ class DND:
         url = '{}{}'.format(BASEURL, 'spells')
         print(url)
         await self.bot.say('URL lookup: '+url)
-        await _present_list(url)
+        await _present_list(self, url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
 
@@ -72,7 +72,7 @@ async def _get_file(url):
             if json_file is not None:
                 return json_file
 
-async def _present_list(url):
+async def _present_list(self, url):
     json_file = await _get_file(url)
     urllength = len(url)
     print(urllength)
