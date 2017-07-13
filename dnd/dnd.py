@@ -39,7 +39,7 @@ class DND:
 
 
             for page in chat.pagify(package, delims=['\n']):
-                await self.bot.say(box(page))
+                await self.bot.say(chat.box(page))
 
             # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
             # em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
