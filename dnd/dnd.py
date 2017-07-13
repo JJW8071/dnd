@@ -35,7 +35,7 @@ class DND:
             count=json_file['count']
             results = json_file['results']
             await self.bot.say('count: {}'.format(count))
-            package = '{}'.join(results['name'])
+            package = '{}'.join(r['name'] for r in results)
 
 
             for page in chat.pagify(package, delims=['\n']):
