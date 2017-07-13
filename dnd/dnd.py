@@ -20,23 +20,23 @@ class DND:
     @dnd.command(name='spells')
     async def lookup_spells(self, spell=None):
         '''Lookup Spells'''
+        if spell is not None:
+            print('initiate name query')
         url = '{}{}'.format(BASEURL, 'spells')
         print(url)
         await self.bot.say('URL lookup: '+url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
-        file_txt = _get_file(url)
-        if file_txt is not None:
-            print(file_txt)
+        json_file = _get_file(url)
+        if json_file is not None:
+            print(json_file)
             await self.bot.say('Debug: Text file arrived.')
+        count=json_file['count']
+        em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
+        em.add_field(name='Name',value='\n'.join(r['name'] for r in json_file['results']))
+        await self.bot.say(embed=em)
 
-async def _get_file(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            print('_get_file('+url+')')
-            file_txt = await response.text()
-            if file_txt is not None:
-                return file_txt
+
 
     @dnd.command(name='classes')
     async def lookup_classes(self, klass=None):
@@ -62,6 +62,14 @@ async def _get_file(url):
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
+
+async def _get_file(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            print('_get_file('+url+')')
+            json_file = await response.json()
+            if json_file is not None:
+                return json_file
 
 
 def setup(bot):
