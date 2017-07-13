@@ -27,7 +27,7 @@ class DND:
         url = '{}{}'.format(BASEURL, 'spells')
         print(url)
         await self.bot.say('URL lookup: '+url)
-        _present_list(url)
+        await _present_list(url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
 
@@ -87,6 +87,7 @@ async def _present_list(url):
     #
     #     for page in chat.pagify(package, delims=['\n']):
     #         await self.bot.say(chat.box(page))
+    return
 
 
 def setup(bot):
