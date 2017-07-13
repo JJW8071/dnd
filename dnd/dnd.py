@@ -33,7 +33,6 @@ class DND:
         if json_file is not None:
             print(json_file)
             count=json_file['count']
-            pring(count)
             results = json_file['results']
             await self.bot.say('count: {}'.format(count))
             package = '{}'.join(results['name'])
