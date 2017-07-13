@@ -81,7 +81,7 @@ async def _present_list(self, url):
         count=json_file['count']
         results = json_file['results']
         await self.bot.say('count: {}'.format(count))
-        package = '\n'.join(r['url'].rindex('/'), r['name'] for r in results)
+        package = '\n'.join((r['url'].rindex('/'), r['name']) for r in results)
 
 
         for page in chat.pagify(package, delims=['\n']):
