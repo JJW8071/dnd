@@ -2,6 +2,7 @@ import discord
 import aiohttp
 import json
 from __main__ import send_cmd_help
+from chat_formatting import pagify
 from discord.ext import commands
 
 BASEURL = 'http://dnd5eapi.co/api/'
@@ -34,12 +35,10 @@ class DND:
             count=json_file['count']
             results = json_file['results']
             await self.bot.say('count: {}'.format(count))
-            i=1
-            package = []
-            for r in results:
-                package.append('\n{} {}'.format(i, results['name'])
+            package = '{}'.join(results['name'])
 
-            for page in pagify(package, delims=['\n']):
+
+            for page in chat.pagify(package, delims=['\n']):
                 await self.bot.say(box(page))
 
             # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
