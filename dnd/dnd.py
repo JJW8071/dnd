@@ -31,16 +31,16 @@ class DND:
         json_file = await _get_file(url)
         if json_file is not None:
             print(json_file)
-            # await self.bot.say('Debug: Text file arrived.')
             count=json_file['count']
             results = json_file['results']
             await self.bot.say('count: {}'.format(count))
             i=1
             package = []
             for r in results:
-                package.append('{} {}\n'.format(i, results['name'])
+                package.append('\n{} {}'.format(i, results['name'])
 
-            await self.bot.say(pagify(package))
+            for page in pagify(package, delims=['\n']):
+                await self.bot.say(box(page))
 
             # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
             # em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
