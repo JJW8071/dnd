@@ -35,7 +35,13 @@ class DND:
             count=json_file['count']
             results = json_file['results']
             await self.bot.say('count: {}'.format(count))
-            
+            i=1
+            package = []
+            for r in results:
+                package.append('{} {}\n'.format(i, results['name'])
+
+            await self.bot.say(pagify(package))
+
             # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
             # em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
             # await self.bot.say(embed=em)
