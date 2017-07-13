@@ -2,7 +2,7 @@ import discord
 import aiohttp
 import json
 from __main__ import send_cmd_help
-from chat_formatting import pagify
+from .utils import chat_formatting as chat
 from discord.ext import commands
 
 BASEURL = 'http://dnd5eapi.co/api/'
@@ -33,6 +33,7 @@ class DND:
         if json_file is not None:
             print(json_file)
             count=json_file['count']
+            pring(count)
             results = json_file['results']
             await self.bot.say('count: {}'.format(count))
             package = '{}'.join(results['name'])
