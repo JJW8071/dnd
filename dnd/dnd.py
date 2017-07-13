@@ -31,13 +31,14 @@ class DND:
         json_file = await _get_file(url)
         if json_file is not None:
             print(json_file)
-            await self.bot.say('Debug: Text file arrived.')
+            # await self.bot.say('Debug: Text file arrived.')
             count=json_file['count']
             results = json_file['results']
-
-            em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
-            em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
-            await self.bot.say(embed=em)
+            await self.bot.say('count: {}'.format(count))
+            
+            # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
+            # em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
+            # await self.bot.say(embed=em)
 
 
 
