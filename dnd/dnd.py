@@ -27,19 +27,11 @@ class DND:
         url = '{}{}'.format(BASEURL, 'spells')
         print(url)
         await self.bot.say('URL lookup: '+url)
+        _present_list(url)
         #Your code will go here
         await self.bot.say("Lookup Spells initiated.")
-        json_file = await _get_file(url)
-        if json_file is not None:
-            print(json_file)
-            count=json_file['count']
-            results = json_file['results']
-            await self.bot.say('count: {}'.format(count))
-            package = '\n'.join(r['name'] for r in results)
 
 
-            for page in chat.pagify(package, delims=['\n']):
-                await self.bot.say(chat.box(page))
 
             # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
             # em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
@@ -79,6 +71,21 @@ async def _get_file(url):
             json_file = await response.json()
             if json_file is not None:
                 return json_file
+
+async def _present_list(url):
+    json_file = await _get_file(url)
+    urllength = len(url)
+    print(urllength)
+    if json_file is not None:
+        count=json_file['count']
+        results = json_file['results']
+        await self.bot.say('count: {}'.format(count))
+
+        package = '\n'.join([-urllength:r['url']], r['name'] for r in results)
+
+
+        for page in chat.pagify(package, delims=['\n']):
+            await self.bot.say(chat.box(page))
 
 
 def setup(bot):
