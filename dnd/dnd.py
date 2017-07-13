@@ -82,9 +82,8 @@ async def _present_list(self, url):
         results = json_file['results']
         await self.bot.say('count: {}'.format(count))
         package = []
-        for r in results:
-            num = r['url'].split('/')[-1]
-            package.append('{} {}'.format(num, r['name'])
+        for i, r in enumerate(results):
+            package.append('{} {}'.format(i, r['name']))
 
         pages = pagify(package, delims=['\n'])
         for page in pages:
