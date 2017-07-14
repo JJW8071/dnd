@@ -25,7 +25,7 @@ class DND:
             return
 
     @dnd.command(name='spells', pass_context=True)
-    async def lookup_spells(self, ctx, spell=None):
+    async def lookup_spells(self, ctx, *, spell=None):
         '''Lookup Spells'''
         CHANNEL = ctx.message.channel
         CATEGORY = 'Spells'
@@ -64,10 +64,10 @@ class DND:
     #     await self.bot.say("<{}>".format(baseurl))
 
 
-    async def cogs_menu(self, ctx, menu_pages: list, message: discord.Message=None, page=0, timeout: int=30):
+    async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
-        cog = menu_pages[page]
+        cog = cog_list[page]
         if not message:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
@@ -95,19 +95,19 @@ class DND:
         react = reacts[react.reaction.emoji]
         if react == "next":
             next_page = 0
-            if page == len(menu_pages) - 1:
+            if page == len(cog_list) - 1:
                 next_page = 0  # Loop around to the first item
             else:
                 next_page = page + 1
-            return await self.cogs_menu(ctx, menu_pages, message=message,
+            return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
         elif react == "back":
             next_page = 0
             if page == 0:
-                next_page = len(menu_pages) - 1  # Loop around to the last item
+                next_page = len(cog_list) - 1  # Loop around to the last item
             else:
                 next_page = page - 1
-            return await self.cogs_menu(ctx, menu_pages, message=message,
+            return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
         else:
             try:
