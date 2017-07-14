@@ -78,9 +78,10 @@ async def _present_list(self, url):
     print(urllength)
     await self.bot.say('{}'.format(urllength))
     if json_file is not None:
+        count = json_file['count']
         results = json_file['results']
         package = []
-        for i in range(0,len(results-1)):
+        for i in range(0,int(count)):
             c = i+1
             package.append('{} {}'.format(c, r['name']))
 
