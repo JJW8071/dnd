@@ -6,9 +6,11 @@ from .utils import chat_formatting as chat
 from discord.ext import commands
 
 numbs = {
-    "next": "➡",
-    "back": "⬅",
-    "exit": "❌"
+    "rewind" : ":rewind:",
+    "next": ":arrow_forward:",
+    "back": ":arrow_backward:",
+    "fast_forward": ":fast_forward:"
+    "exit": ":x:"
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
@@ -74,23 +76,25 @@ class DND:
         if not message:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
-            await self.bot.add_reaction(message, "⬅")
-            await self.bot.add_reaction(message, "❌")
-            await self.bot.add_reaction(message, "➡")
+            await self.bot.add_reaction(message, ":rewind:")
+            await self.bot.add_reaction(message, ":arrow_backward:")
+            await self.bot.add_reaction(message, ":x:")
+            await self.bot.add_reaction(message, ":arrow_forward:")
+            await self.bot.add_reaction(message, ":fast_forward:")
         else:
             message = await self.bot.edit_message(message, embed=cog)
         react = await self.bot.wait_for_reaction(
             message=message, user=ctx.message.author, timeout=timeout,
-            emoji=["➡", "⬅", "❌"]
+            emoji=[":arrow_forward:", ":arrow_backward:", ":x:", ":rewind:", ":fast_forward:"]
         )
         if react is None:
             try:
                 try:
                     await self.bot.clear_reactions(message)
                 except:
-                    await self.bot.remove_reaction(message, "⬅", self.bot.user)
-                    await self.bot.remove_reaction(message, "❌", self.bot.user)
-                    await self.bot.remove_reaction(message, "➡", self.bot.user)
+                    await self.bot.remove_reaction(message, ":arrow_backward:", self.bot.user)
+                    await self.bot.remove_reaction(message, ":x:", self.bot.user)
+                    await self.bot.remove_reaction(message, ":arrow_forward:", self.bot.user)
             except:
                 pass
             return None
@@ -112,6 +116,24 @@ class DND:
                 next_page = page - 1
             return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
+        elif react == "rewind":
+            next_page = 0
+            for i in range(0,4):
+                if page == 0:
+                    next_page = len(cog_list) - 1  # Loop around to the last item
+                else:
+                    next_page = page - 1
+            return await self.cogs_menu(ctx, cog_list, message=message,
+                                            page=next_page, timeout=timeout)
+        elif react == "fast_forward":
+            next_page = 0
+            for i in range(0,4):
+                if page == 0:
+                    next_page = len(cog_list) - 1  # Loop around to the last item
+                else:
+                    next_page = page + 1
+            return await self.cogs_menu(ctx, cog_list, message=message,
+                                            page=next_page, timeout=timeout)
         else:
             try:
                 return await\
@@ -142,7 +164,7 @@ async def _present_list(self, url, category):
         menu_pages = []
 
         for page in pages:
-            em=discord.Embed(color=discord.Color.red(), title=category, description=page)
+            em=discord.Embed(color=discord.Color.red(), title=category, description=chat.box(page))
             em.set_footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
             menu_pages.append(em)
 
