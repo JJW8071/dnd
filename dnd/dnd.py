@@ -19,7 +19,7 @@ class DND:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(name='spells')
+    @dnd.command(name='spells', pass_context=True)
     async def lookup_spells(self, ctx, spell=None):
         '''Lookup Spells'''
         CHANNEL = ctx.message.channel
@@ -34,7 +34,7 @@ class DND:
             await self.bot.say('spell: {}'.format(spell))
 
     #
-    # @dnd.command(name='classes')
+    # @dnd.command(name='classes', pass_context=True)
     # async def lookup_classes(self, klass=None):
     #     '''Lookup Classes'''
     #     baseurl = BASEURL+'classes'
@@ -42,7 +42,7 @@ class DND:
     #     await self.bot.say("Lookup Classes initiated.")
     #     await self.bot.say("<{}>".format(baseurl))
     #
-    # @dnd.command(name='monsters')
+    # @dnd.command(name='monsters', pass_context=True)
     # async def lookup_monsters(self, monster=None):
     #     '''Lookup Monsters'''
     #     baseurl = BASEURL+'monsters'
@@ -50,7 +50,7 @@ class DND:
     #     await self.bot.say("Lookup Monsters initiated.")
     #     await self.bot.say("<{}>".format(baseurl))
     #
-    # @dnd.command(name='equipment')
+    # @dnd.command(name='equipment', pass_context=True)
     # async def lookup_equipment(self, equiped=None):
     #     '''Lookup Equpiment'''
     #     baseurl = BASEURL+'equipment'
