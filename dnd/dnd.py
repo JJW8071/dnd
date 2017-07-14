@@ -10,6 +10,7 @@ numbs = {
     "back": "⬅",
     "exit": "❌"
 }
+
 BASEURL = 'http://dnd5eapi.co/api/'
 
 class DND:
@@ -137,12 +138,15 @@ async def _present_list(self, url, category):
             package.append('{} {}'.format(c, json_file['results'][i]['name']))
 
         pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
+        await self.bot.say('{} pages'.format(len(pages)))
         menu_pages = []
+
         for page in pages:
             em=discord.Embed(color=discord.Color.red(), title=category, description=page)
             em.set_footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
             menu_pages.append(em)
-            return menu_pages
+
+        return menu_pages
 
 
 def setup(bot):
