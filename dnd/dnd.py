@@ -20,43 +20,43 @@ class DND:
             return
 
     @dnd.command(name='spells')
-    async def lookup_spells(self, ctx, *, spell=None):
+    async def lookup_spells(self, ctx, spell=None):
         '''Lookup Spells'''
+        CHANNEL = ctx.message.channel
         CATEGORY = 'Spells'
         if spell is None:
-            print('initiate name query')
             url = '{}{}'.format(BASEURL, CATEGORY)
-            print(url)
-            await self.bot.say('URL lookup: '+url)
             menu_pages = await _present_list(self, url, CATEGORY)
+            ## // process menu_pages
+            await self.cogs_menu(menu_pages)
+
         elif spell is not None:
             await self.bot.say('spell: {}'.format(spell))
 
-
-
-    @dnd.command(name='classes')
-    async def lookup_classes(self, klass=None):
-        '''Lookup Classes'''
-        baseurl = BASEURL+'classes'
-        #Your code will go here
-        await self.bot.say("Lookup Classes initiated.")
-        await self.bot.say("<{}>".format(baseurl))
-
-    @dnd.command(name='monsters')
-    async def lookup_monsters(self, monster=None):
-        '''Lookup Monsters'''
-        baseurl = BASEURL+'monsters'
-        #Your code will go here
-        await self.bot.say("Lookup Monsters initiated.")
-        await self.bot.say("<{}>".format(baseurl))
-
-    @dnd.command(name='equipment')
-    async def lookup_equipment(self, equiped=None):
-        '''Lookup Equpiment'''
-        baseurl = BASEURL+'equipment'
-        #Your code will go here
-        await self.bot.say("Lookup Spells initiated.")
-        await self.bot.say("<{}>".format(baseurl))
+    #
+    # @dnd.command(name='classes')
+    # async def lookup_classes(self, klass=None):
+    #     '''Lookup Classes'''
+    #     baseurl = BASEURL+'classes'
+    #     #Your code will go here
+    #     await self.bot.say("Lookup Classes initiated.")
+    #     await self.bot.say("<{}>".format(baseurl))
+    #
+    # @dnd.command(name='monsters')
+    # async def lookup_monsters(self, monster=None):
+    #     '''Lookup Monsters'''
+    #     baseurl = BASEURL+'monsters'
+    #     #Your code will go here
+    #     await self.bot.say("Lookup Monsters initiated.")
+    #     await self.bot.say("<{}>".format(baseurl))
+    #
+    # @dnd.command(name='equipment')
+    # async def lookup_equipment(self, equiped=None):
+    #     '''Lookup Equpiment'''
+    #     baseurl = BASEURL+'equipment'
+    #     #Your code will go here
+    #     await self.bot.say("Lookup Spells initiated.")
+    #     await self.bot.say("<{}>".format(baseurl))
 
     async def cogs_menu(self, ctx, menu_pages: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
