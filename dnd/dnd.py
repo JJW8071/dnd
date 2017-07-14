@@ -78,14 +78,17 @@ async def _present_list(self, url):
     print(urllength)
     await self.bot.say('{}'.format(urllength))
     if json_file is not None:
-        count=json_file['count']
         results = json_file['results']
-        await self.bot.say('count: {}'.format(count))
         package = []
-        for i, r in enumerate(results):
-            package.append('{} {}'.format(i, r['name']))
+        for i in range(0,len(results-1)):
+            c = i+1
+            package.append('{} {}'.format(c, r['name']))
 
-        pages = chat.pagify(package, delims=['\n'])
+
+        # for i, r in enumerate(results):
+        #     package.append('{} {}'.format(i, r['name']))
+
+        pages = chat.pagify('\n'.join(package), delims=['\n'])
         for page in pages:
             await self.bot.say(chat.box(page))
     return
