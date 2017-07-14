@@ -9,8 +9,8 @@ numbs = {
     "rewind" : ":rewind:",
     "next": ":arrow_forward:",
     "back": ":arrow_backward:",
-    "fast_forward": ":fast_forward:"
-    "exit": ":x:"
+    "fast_forward": ":fast_forward:",
+    "exit": ":x:",
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
