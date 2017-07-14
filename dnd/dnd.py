@@ -88,7 +88,7 @@ async def _present_list(self, url):
         # for i, r in enumerate(results):
         #     package.append('{} {}'.format(i, r['name']))
 
-        pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=1000)
+        pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
         for page in pages:
             await self.bot.say(chat.box(page))
     return
