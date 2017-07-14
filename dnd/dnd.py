@@ -38,7 +38,9 @@ class DND:
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
         elif spell is not None:
-            await self.bot.say('spell: {}'.format(spell))
+            QUERY = spell.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+            await self.bot.say('spell search: <{}>'.format(url))
 
     #
     # @dnd.command(name='classes', pass_context=True)
