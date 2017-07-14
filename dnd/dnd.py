@@ -28,7 +28,7 @@ class DND:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             ## // process menu_pages
-            await self.cogs_menu(menu_pages)
+            await self.cogs_menu(ctx, menu_pages)
 
         elif spell is not None:
             await self.bot.say('spell: {}'.format(spell))
@@ -57,6 +57,7 @@ class DND:
     #     #Your code will go here
     #     await self.bot.say("Lookup Spells initiated.")
     #     await self.bot.say("<{}>".format(baseurl))
+
 
     async def cogs_menu(self, ctx, menu_pages: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
