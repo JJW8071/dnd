@@ -5,6 +5,11 @@ from __main__ import send_cmd_help
 from .utils import chat_formatting as chat
 from discord.ext import commands
 
+numbs = {
+    "next": "➡",
+    "back": "⬅",
+    "exit": "❌"
+}
 BASEURL = 'http://dnd5eapi.co/api/'
 
 class DND:
