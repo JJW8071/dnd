@@ -20,22 +20,17 @@ class DND:
             return
 
     @dnd.command(name='spells')
-    async def lookup_spells(self, spell=None):
+    async def lookup_spells(self, ctx, *, spell=None):
         '''Lookup Spells'''
-        if spell is not None:
+        CATEGORY = 'Spells'
+        if spell is None:
             print('initiate name query')
-        url = '{}{}'.format(BASEURL, 'spells')
-        print(url)
-        await self.bot.say('URL lookup: '+url)
-        await _present_list(self, url)
-        #Your code will go here
-        await self.bot.say("Lookup Spells initiated.")
-
-
-
-            # em=discord.Embed(color=discord.Color.red(),title='Spells',description='{} found'.format(count))
-            # em.add_field(name='Name',value='\n'.join(r['name'] for r in results))
-            # await self.bot.say(embed=em)
+            url = '{}{}'.format(BASEURL, CATEGORY)
+            print(url)
+            await self.bot.say('URL lookup: '+url)
+            menu_pages = await _present_list(self, url, CATEGORY)
+        elif spell is not None:
+            await self.bot.say('spell: {}'.format(spell))
 
 
 
@@ -63,6 +58,59 @@ class DND:
         await self.bot.say("Lookup Spells initiated.")
         await self.bot.say("<{}>".format(baseurl))
 
+    async def cogs_menu(self, ctx, menu_pages: list, message: discord.Message=None, page=0, timeout: int=30):
+        """menu control logic for this taken from
+           https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
+        cog = menu_pages[page]
+        if not message:
+            message =\
+                await self.bot.send_message(ctx.message.channel, embed=cog)
+            await self.bot.add_reaction(message, "⬅")
+            await self.bot.add_reaction(message, "❌")
+            await self.bot.add_reaction(message, "➡")
+        else:
+            message = await self.bot.edit_message(message, embed=cog)
+        react = await self.bot.wait_for_reaction(
+            message=message, user=ctx.message.author, timeout=timeout,
+            emoji=["➡", "⬅", "❌"]
+        )
+        if react is None:
+            try:
+                try:
+                    await self.bot.clear_reactions(message)
+                except:
+                    await self.bot.remove_reaction(message, "⬅", self.bot.user)
+                    await self.bot.remove_reaction(message, "❌", self.bot.user)
+                    await self.bot.remove_reaction(message, "➡", self.bot.user)
+            except:
+                pass
+            return None
+        reacts = {v: k for k, v in numbs.items()}
+        react = reacts[react.reaction.emoji]
+        if react == "next":
+            next_page = 0
+            if page == len(menu_pages) - 1:
+                next_page = 0  # Loop around to the first item
+            else:
+                next_page = page + 1
+            return await self.cogs_menu(ctx, menu_pages, message=message,
+                                        page=next_page, timeout=timeout)
+        elif react == "back":
+            next_page = 0
+            if page == 0:
+                next_page = len(menu_pages) - 1  # Loop around to the last item
+            else:
+                next_page = page - 1
+            return await self.cogs_menu(ctx, menu_pages, message=message,
+                                        page=next_page, timeout=timeout)
+        else:
+            try:
+                return await\
+                    self.bot.delete_message(message)
+            except:
+                pass
+
+
 
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
@@ -72,7 +120,7 @@ async def _get_file(url):
             if json_file is not None:
                 return json_file
 
-async def _present_list(self, url):
+async def _present_list(self, url, category):
     json_file = await _get_file(url)
     urllength = len(url)
     print(urllength)
@@ -85,13 +133,13 @@ async def _present_list(self, url):
             c = i+1
             package.append('{} {}'.format(c, results[i]['name']))
 
-        # for i, r in enumerate(results):
-        #     package.append('{} {}'.format(i, r['name']))
-
         pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
+        menu_pages = []
         for page in pages:
-            await self.bot.say(chat.box(page))
-    return
+            em=discord.Embed(color=discord.Color.red(), Title=category, descriptoin=page)
+            em.footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
+            menu_pages.append(em)
+            return menu_pages
 
 
 def setup(bot):
