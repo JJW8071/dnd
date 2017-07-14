@@ -85,7 +85,6 @@ async def _present_list(self, url):
             c = i+1
             package.append('{} {}'.format(c, results[i]['name']))
 
-
         # for i, r in enumerate(results):
         #     package.append('{} {}'.format(i, r['name']))
 
