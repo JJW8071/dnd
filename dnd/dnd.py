@@ -65,7 +65,6 @@ class DND:
     #     await self.bot.say("Lookup Spells initiated.")
     #     await self.bot.say("<{}>".format(baseurl))
 
-
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
@@ -138,7 +137,6 @@ async def _present_list(self, url, category):
             package.append('{} {}'.format(c, json_file['results'][i]['name']))
 
         pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
-        await self.bot.say('{} pages'.format(len(pages)))
         menu_pages = []
 
         for page in pages:
