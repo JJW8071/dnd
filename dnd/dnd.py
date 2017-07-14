@@ -33,7 +33,8 @@ class DND:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             ## // process menu_pages
-            await self.cogs_menu(ctx, menu_pages)
+            await self.bot.say('{} pages'.format(len(menu_pages)))
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
         elif spell is not None:
             await self.bot.say('spell: {}'.format(spell))
@@ -128,16 +129,12 @@ async def _get_file(url):
 
 async def _present_list(self, url, category):
     json_file = await _get_file(url)
-    urllength = len(url)
-    print(urllength)
-    await self.bot.say('{}'.format(urllength))
     if json_file is not None:
-        count = json_file['count']
         results = json_file['results']
         package = []
-        for i in range(0,int(count)):
+        for i in range(0,int(json_file['count'])):
             c = i+1
-            package.append('{} {}'.format(c, results[i]['name']))
+            package.append('{} {}'.format(c, json_file['results'][i]['name']))
 
         pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
         menu_pages = []
