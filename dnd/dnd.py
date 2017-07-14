@@ -136,8 +136,8 @@ async def _present_list(self, url, category):
         pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
         menu_pages = []
         for page in pages:
-            em=discord.Embed(color=discord.Color.red(), Title=category, descriptoin=page)
-            em.footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
+            em=discord.Embed(color=discord.Color.red(), title=category, description=page)
+            em.set_footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
             menu_pages.append(em)
             return menu_pages
 
