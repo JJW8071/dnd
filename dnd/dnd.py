@@ -138,7 +138,7 @@ async def _present_list(self, url, category):
             c = i+1
             package.append('{} {}'.format(c, json_file['results'][i]['name']))
 
-        pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=750)
+        pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=330)
         menu_pages = []
 
         for page in pages:
