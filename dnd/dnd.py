@@ -28,46 +28,65 @@ class DND:
             return
 
     @dnd.command(name='spells', pass_context=True)
-    async def lookup_spells(self, ctx, *, spell=None):
+    async def lookup_spells(self, ctx, *, query=None):
         '''Lookup Spells'''
-        CHANNEL = ctx.message.channel
         CATEGORY = 'Spells'
         if spell is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
-            ## // process menu_pages
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
         elif spell is not None:
-            QUERY = spell.replace(' ','+')
+            QUERY = query.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
             await self.bot.say('spell search: <{}>'.format(url))
 
-    #
-    # @dnd.command(name='classes', pass_context=True)
-    # async def lookup_classes(self, klass=None):
-    #     '''Lookup Classes'''
-    #     baseurl = BASEURL+'classes'
-    #     #Your code will go here
-    #     await self.bot.say("Lookup Classes initiated.")
-    #     await self.bot.say("<{}>".format(baseurl))
-    #
-    # @dnd.command(name='monsters', pass_context=True)
-    # async def lookup_monsters(self, monster=None):
-    #     '''Lookup Monsters'''
-    #     baseurl = BASEURL+'monsters'
-    #     #Your code will go here
-    #     await self.bot.say("Lookup Monsters initiated.")
-    #     await self.bot.say("<{}>".format(baseurl))
-    #
-    # @dnd.command(name='equipment', pass_context=True)
-    # async def lookup_equipment(self, equiped=None):
-    #     '''Lookup Equpiment'''
-    #     baseurl = BASEURL+'equipment'
-    #     #Your code will go here
-    #     await self.bot.say("Lookup Spells initiated.")
-    #     await self.bot.say("<{}>".format(baseurl))
+
+    @dnd.command(name='classes', pass_context=True)
+    async def lookup_classes(self, query=None):
+        '''Lookup Classes'''
+        CATEGORY = 'Classes'
+        if spell is None:
+            url = '{}{}'.format(BASEURL, CATEGORY)
+            menu_pages = await _present_list(self, url, CATEGORY)
+            await self.bot.say('{} pages'.format(len(menu_pages)))
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
+
+        elif spell is not None:
+            QUERY = query.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+            await self.bot.say('class search: <{}>'.format(url))
+
+    @dnd.command(name='monsters', pass_context=True)
+    async def lookup_monsters(self, query=None):
+        '''Lookup Monsters'''
+        CATEGORY = 'monsters'
+        if spell is None:
+            url = '{}{}'.format(BASEURL, CATEGORY)
+            menu_pages = await _present_list(self, url, CATEGORY)
+            await self.bot.say('{} pages'.format(len(menu_pages)))
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
+
+        elif spell is not None:
+            QUERY = query.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+            await self.bot.say('Monster search: <{}>'.format(url))
+
+    @dnd.command(name='equipment', pass_context=True)
+    async def lookup_equipment(self, query=None):
+        '''Lookup Equpiment'''
+        CATEGORY = 'equipment'
+        if spell is None:
+            url = '{}{}'.format(BASEURL, CATEGORY)
+            menu_pages = await _present_list(self, url, CATEGORY)
+            await self.bot.say('{} pages'.format(len(menu_pages)))
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
+
+        elif spell is not None:
+            QUERY = query.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+            await self.bot.say('Equipment search: <{}>'.format(url))
 
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
@@ -103,37 +122,19 @@ class DND:
         reacts = {v: k for k, v in numbs.items()}
         react = reacts[react.reaction.emoji]
         if react == "next":
-            next_page = 0
-            if page == len(cog_list) - 1:
-                next_page = 0  # Loop around to the first item
-            else:
-                next_page = page + 1
+            next_page = (page + 1) % len(cog_list)
             return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
         elif react == "back":
-            next_page = 0
-            if page == 0:
-                next_page = len(cog_list) - 1  # Loop around to the last item
-            else:
-                next_page = page - 1
+            next_page = (page - 1) % len(cog_list)
             return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
         elif react == "rewind":
-            # next_page = 0
-            # if page == 0:
-            #     next_page = len(cog_list) - 1  # Loop around to the last item
-            # else:
-            #     next_page = page - 1
             next_page = (page - 5) % len(cog_list)
             return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
         elif react == "fast_forward":
-            # next_page = 0
             next_page = (page + 5) % len(cog_list)
-            # if page == 0:
-            #     next_page = len(cog_list) - 1  # Loop around to the last item
-            # else:
-            #     next_page = page + 1
             return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
         else:
