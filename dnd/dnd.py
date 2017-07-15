@@ -7,8 +7,8 @@ from discord.ext import commands
 
 numbs = {
     "rewind" : "⏪",
-    "next": "▶️",
-    "back": "◀️",
+    "next": "➡",
+    "back": "⬅",
     "fast_forward": "⏩",
     "exit": "❌",
 }
@@ -77,15 +77,15 @@ class DND:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
             await self.bot.add_reaction(message, "⏪")
-            await self.bot.add_reaction(message, "◀️")
+            await self.bot.add_reaction(message, "⬅")
             await self.bot.add_reaction(message, "❌")
-            await self.bot.add_reaction(message, "▶️")
+            await self.bot.add_reaction(message, "➡")
             await self.bot.add_reaction(message, "⏩")
         else:
             message = await self.bot.edit_message(message, embed=cog)
         react = await self.bot.wait_for_reaction(
             message=message, user=ctx.message.author, timeout=timeout,
-            emoji=["▶️", "◀️", "❌", "⏪", "⏩"]
+            emoji=["➡", "⬅", "❌", "⏪", "⏩"]
         )
         if react is None:
             try:
@@ -93,9 +93,9 @@ class DND:
                     await self.bot.clear_reactions(message)
                 except:
                     await self.bot.remove_reaction(message,"⏪", self.bot.user)
-                    await self.bot.remove_reaction(message, "◀️", self.bot.user)
+                    await self.bot.remove_reaction(message, "⬅", self.bot.user)
                     await self.bot.remove_reaction(message, "❌", self.bot.user)
-                    await self.bot.remove_reaction(message, "▶️", self.bot.user)
+                    await self.bot.remove_reaction(message, "➡", self.bot.user)
                     await self.bot.remove_reaction(message,"⏩", self.bot.user)
             except:
                 pass
