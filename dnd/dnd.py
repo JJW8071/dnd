@@ -119,21 +119,21 @@ class DND:
             return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
         elif react == "rewind":
-            next_page = 0
-            for i in range(0,4):
-                if page == 0:
-                    next_page = len(cog_list) - 1  # Loop around to the last item
-                else:
-                    next_page = page - 1
+            # next_page = 0
+            # if page == 0:
+            #     next_page = len(cog_list) - 1  # Loop around to the last item
+            # else:
+            #     next_page = page - 1
+            next_page = (page - 5) % len(cog_list)
             return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
         elif react == "fast_forward":
-            next_page = 0
-            for i in range(0,4):
-                if page == 0:
-                    next_page = len(cog_list) - 1  # Loop around to the last item
-                else:
-                    next_page = page + 1
+            # next_page = 0
+            next_page = (page + 5) % len(cog_list)
+            # if page == 0:
+            #     next_page = len(cog_list) - 1  # Loop around to the last item
+            # else:
+            #     next_page = page + 1
             return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
         else:
