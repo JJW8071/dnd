@@ -40,7 +40,7 @@ class DND:
         await self._process_category(ctx, search, CATEGORY)
 
 
-    async def _process_category(self, ctx, search, CATEGORY)
+    async def _process_category(self, ctx, search, CATEGORY):
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
