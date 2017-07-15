@@ -28,63 +28,71 @@ class DND:
             return
 
     @dnd.command(name='spells', pass_context=True)
-    async def lookup_spells(self, ctx, *, query=None):
+    async def lookup_spells(self, ctx, *, search=None):
         '''Lookup Spells'''
         CATEGORY = 'Spells'
-        if query is None:
+        if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif query is not None:
-            QUERY = query.replace(' ','+')
-            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+        elif search is not None:
+            if ' ' in search:
+                search = search.replace(' ', '+')
+            search = search.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     @dnd.command(name='classes', pass_context=True)
-    async def lookup_classes(self, query=None):
+    async def lookup_classes(self, search=None):
         '''Lookup Classes'''
         CATEGORY = 'Classes'
-        if query is None:
+        if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif query is not None:
-            QUERY = query.replace(' ','+')
-            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+        elif search is not None:
+            if ' ' in search:
+                search = search.replace(' ', '+')
+            search = search.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     @dnd.command(name='monsters', pass_context=True)
-    async def lookup_monsters(self, query=None):
+    async def lookup_monsters(self, search=None):
         '''Lookup Monsters'''
         CATEGORY = 'monsters'
-        if query is None:
+        if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif query is not None:
-            QUERY = query.replace(' ','+')
-            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+        elif search is not None:
+            if ' ' in search:
+                search = search.replace(' ', '+')
+            search = search.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     @dnd.command(name='equipment', pass_context=True)
-    async def lookup_equipment(self, query=None):
+    async def lookup_equipment(self, search=None):
         '''Lookup Equpiment'''
         CATEGORY = 'equipment'
-        if query is None:
+        if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif query is not None:
-            QUERY = query.replace(' ','+')
-            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
+        elif search is not None:
+            if ' ' in search:
+                search = search.replace(' ', '+')
+            search = search.replace(' ','+')
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
