@@ -27,66 +27,65 @@ class DND:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(name='spells', pass_context=True)
+    @dnd.command(name='s', pass_context=True)
     async def lookup_spells(self, ctx, *, query=None):
         '''Lookup Spells'''
         CATEGORY = 'Spells'
-        if spell is None:
+        if query is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif spell is not None:
+        elif query is not None:
             QUERY = query.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
-            await self.bot.say('spell search: <{}>'.format(url))
-
+            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     @dnd.command(name='classes', pass_context=True)
     async def lookup_classes(self, query=None):
         '''Lookup Classes'''
         CATEGORY = 'Classes'
-        if spell is None:
+        if query is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif spell is not None:
+        elif query is not None:
             QUERY = query.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
-            await self.bot.say('class search: <{}>'.format(url))
+            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     @dnd.command(name='monsters', pass_context=True)
     async def lookup_monsters(self, query=None):
         '''Lookup Monsters'''
         CATEGORY = 'monsters'
-        if spell is None:
+        if query is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif spell is not None:
+        elif query is not None:
             QUERY = query.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
-            await self.bot.say('Monster search: <{}>'.format(url))
+            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     @dnd.command(name='equipment', pass_context=True)
     async def lookup_equipment(self, query=None):
         '''Lookup Equpiment'''
         CATEGORY = 'equipment'
-        if spell is None:
+        if query is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
 
-        elif spell is not None:
+        elif query is not None:
             QUERY = query.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, QUERY)
-            await self.bot.say('Equipment search: <{}>'.format(url))
+            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
