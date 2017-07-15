@@ -76,11 +76,11 @@ class DND:
         if not message:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
-            await self.bot.add_reaction(message, ":rewind:")
+            # await self.bot.add_reaction(message, ":rewind:")
             await self.bot.add_reaction(message, ":arrow_backward:")
             await self.bot.add_reaction(message, ":stop_button:")
             await self.bot.add_reaction(message, ":arrow_forward:")
-            await self.bot.add_reaction(message, ":fast_forward:")
+            # await self.bot.add_reaction(message, ":fast_forward:")
         else:
             message = await self.bot.edit_message(message, embed=cog)
         react = await self.bot.wait_for_reaction(
@@ -116,24 +116,24 @@ class DND:
                 next_page = page - 1
             return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
-        elif react == "rewind":
-            next_page = 0
-            for i in range(0,4):
-                if page == 0:
-                    next_page = len(cog_list) - 1  # Loop around to the last item
-                else:
-                    next_page = page - 1
-            return await self.cogs_menu(ctx, cog_list, message=message,
-                                            page=next_page, timeout=timeout)
-        elif react == "fast_forward":
-            next_page = 0
-            for i in range(0,4):
-                if page == 0:
-                    next_page = len(cog_list) - 1  # Loop around to the last item
-                else:
-                    next_page = page + 1
-            return await self.cogs_menu(ctx, cog_list, message=message,
-                                            page=next_page, timeout=timeout)
+        # elif react == "rewind":
+        #     next_page = 0
+        #     for i in range(0,4):
+        #         if page == 0:
+        #             next_page = len(cog_list) - 1  # Loop around to the last item
+        #         else:
+        #             next_page = page - 1
+        #     return await self.cogs_menu(ctx, cog_list, message=message,
+        #                                     page=next_page, timeout=timeout)
+        # elif react == "fast_forward":
+        #     next_page = 0
+        #     for i in range(0,4):
+        #         if page == 0:
+        #             next_page = len(cog_list) - 1  # Loop around to the last item
+        #         else:
+        #             next_page = page + 1
+        #     return await self.cogs_menu(ctx, cog_list, message=message,
+        #                                     page=next_page, timeout=timeout)
         else:
             try:
                 return await\
