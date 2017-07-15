@@ -34,11 +34,28 @@ class DND:
         await self._process_category(ctx, search, CATEGORY)
 
     @dnd.command(name='features', pass_context=True)
-    async def lookup_spells(self, ctx, *, search=None):
+    async def lookup_features(self, ctx, *, search=None):
         '''Lookup Features'''
         CATEGORY = 'Features'
         await self._process_category(ctx, search, CATEGORY)
 
+    @dnd.command(name='classes', pass_context=True)
+    async def lookup_classes(self, ctx, *, search=None):
+        '''Lookup classes'''
+        CATEGORY = 'classes'
+        await self._process_category(ctx, search, CATEGORY)
+
+    @dnd.command(name='monsters', pass_context=True)
+    async def lookup_monsters(self, ctx, *, search=None):
+        '''Lookup Monsters'''
+        CATEGORY = 'Monsters'
+        await self._process_category(ctx, search, CATEGORY)
+
+    @dnd.command(name='equipment', pass_context=True)
+    async def lookup_equipment(self, ctx, *, search=None):
+        '''Lookup equipment'''
+        CATEGORY = 'equipment'
+        await self._process_category(ctx, search, CATEGORY)
 
     async def _process_category(self, ctx, search, CATEGORY):
         if search is None:
