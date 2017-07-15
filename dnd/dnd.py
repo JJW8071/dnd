@@ -6,11 +6,11 @@ from .utils import chat_formatting as chat
 from discord.ext import commands
 
 numbs = {
-    "rewind" : ":rewind:",
-    "next": ":arrow_forward:",
-    "back": ":arrow_backward:",
-    "fast_forward": ":fast_forward:",
-    "exit": ":stop_button:",
+    "rewind" : "⏪",
+    "next": "▶️",
+    "back": "◀️",
+    "fast_forward": "⏩",
+    "exit": "❌",
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
@@ -76,25 +76,27 @@ class DND:
         if not message:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
-            # await self.bot.add_reaction(message, ":rewind:")
-            await self.bot.add_reaction(message, ":arrow_backward:")
-            await self.bot.add_reaction(message, ":stop_button:")
-            await self.bot.add_reaction(message, ":arrow_forward:")
-            # await self.bot.add_reaction(message, ":fast_forward:")
+            await self.bot.add_reaction(message, "⏪")
+            await self.bot.add_reaction(message, "◀️")
+            await self.bot.add_reaction(message, "❌")
+            await self.bot.add_reaction(message, "▶️")
+            await self.bot.add_reaction(message, "⏩")
         else:
             message = await self.bot.edit_message(message, embed=cog)
         react = await self.bot.wait_for_reaction(
             message=message, user=ctx.message.author, timeout=timeout,
-            emoji=[":arrow_forward:", ":arrow_backward:", ":stop_button:", ":rewind:", ":fast_forward:"]
+            emoji=["▶️", "◀️", "❌", "⏪", "⏩"]
         )
         if react is None:
             try:
                 try:
                     await self.bot.clear_reactions(message)
                 except:
-                    await self.bot.remove_reaction(message, ":arrow_backward:", self.bot.user)
-                    await self.bot.remove_reaction(message, ":stop_button:", self.bot.user)
-                    await self.bot.remove_reaction(message, ":arrow_forward:", self.bot.user)
+                    await self.bot.remove_reaction(message,"⏪", self.bot.user)
+                    await self.bot.remove_reaction(message, "◀️", self.bot.user)
+                    await self.bot.remove_reaction(message, "❌", self.bot.user)
+                    await self.bot.remove_reaction(message, "▶️", self.bot.user)
+                    await self.bot.remove_reaction(message,"⏩", self.bot.user)
             except:
                 pass
             return None
@@ -116,24 +118,24 @@ class DND:
                 next_page = page - 1
             return await self.cogs_menu(ctx, cog_list, message=message,
                                         page=next_page, timeout=timeout)
-        # elif react == "rewind":
-        #     next_page = 0
-        #     for i in range(0,4):
-        #         if page == 0:
-        #             next_page = len(cog_list) - 1  # Loop around to the last item
-        #         else:
-        #             next_page = page - 1
-        #     return await self.cogs_menu(ctx, cog_list, message=message,
-        #                                     page=next_page, timeout=timeout)
-        # elif react == "fast_forward":
-        #     next_page = 0
-        #     for i in range(0,4):
-        #         if page == 0:
-        #             next_page = len(cog_list) - 1  # Loop around to the last item
-        #         else:
-        #             next_page = page + 1
-        #     return await self.cogs_menu(ctx, cog_list, message=message,
-        #                                     page=next_page, timeout=timeout)
+        elif react == "rewind":
+            next_page = 0
+            for i in range(0,4):
+                if page == 0:
+                    next_page = len(cog_list) - 1  # Loop around to the last item
+                else:
+                    next_page = page - 1
+            return await self.cogs_menu(ctx, cog_list, message=message,
+                                            page=next_page, timeout=timeout)
+        elif react == "fast_forward":
+            next_page = 0
+            for i in range(0,4):
+                if page == 0:
+                    next_page = len(cog_list) - 1  # Loop around to the last item
+                else:
+                    next_page = page + 1
+            return await self.cogs_menu(ctx, cog_list, message=message,
+                                            page=next_page, timeout=timeout)
         else:
             try:
                 return await\
