@@ -31,16 +31,16 @@ class DND:
     async def lookup_spells(self, ctx, *, search=None):
         '''Lookup Spells'''
         CATEGORY = 'Spells'
-        self._process_category(ctx, search, CATEGORY)
+        await self._process_category(ctx, search, CATEGORY)
 
     @dnd.command(name='features', pass_context=True)
     async def lookup_spells(self, ctx, *, search=None):
         '''Lookup Features'''
         CATEGORY = 'Features'
-        self._process_category(ctx, search, CATEGORY)
+        await self._process_category(ctx, search, CATEGORY)
 
 
-    async def _process_category(self, ctx, search)
+    async def _process_category(self, ctx, search, CATEGORY)
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
