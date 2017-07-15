@@ -71,9 +71,8 @@ class DND:
                 search = search.replace(' ', '+')
             search = search.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
-            temp = _get_file(url)
-            url = temp[0][1]
-            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
+            json_file = await _get_file(url)
+            await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
 
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
