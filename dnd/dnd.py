@@ -10,7 +10,7 @@ numbs = {
     "next": ":arrow_forward:",
     "back": ":arrow_backward:",
     "fast_forward": ":fast_forward:",
-    "exit": ":x:",
+    "exit": ":stop_button:",
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
@@ -78,14 +78,14 @@ class DND:
                 await self.bot.send_message(ctx.message.channel, embed=cog)
             await self.bot.add_reaction(message, ":rewind:")
             await self.bot.add_reaction(message, ":arrow_backward:")
-            await self.bot.add_reaction(message, ":x:")
+            await self.bot.add_reaction(message, ":stop_button:")
             await self.bot.add_reaction(message, ":arrow_forward:")
             await self.bot.add_reaction(message, ":fast_forward:")
         else:
             message = await self.bot.edit_message(message, embed=cog)
         react = await self.bot.wait_for_reaction(
             message=message, user=ctx.message.author, timeout=timeout,
-            emoji=[":arrow_forward:", ":arrow_backward:", ":x:", ":rewind:", ":fast_forward:"]
+            emoji=[":arrow_forward:", ":arrow_backward:", ":stop_button:", ":rewind:", ":fast_forward:"]
         )
         if react is None:
             try:
@@ -93,7 +93,7 @@ class DND:
                     await self.bot.clear_reactions(message)
                 except:
                     await self.bot.remove_reaction(message, ":arrow_backward:", self.bot.user)
-                    await self.bot.remove_reaction(message, ":x:", self.bot.user)
+                    await self.bot.remove_reaction(message, ":stop_button:", self.bot.user)
                     await self.bot.remove_reaction(message, ":arrow_forward:", self.bot.user)
             except:
                 pass
