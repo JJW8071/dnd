@@ -57,6 +57,9 @@ class DND:
         CATEGORY = 'equipment'
         await self._process_category(ctx, search, CATEGORY)
 
+
+
+
     async def _process_category(self, ctx, search, CATEGORY):
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
@@ -68,58 +71,9 @@ class DND:
                 search = search.replace(' ', '+')
             search = search.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
+            temp = _get_file(url)
+            url = temp[0][1]
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
-
-    # @dnd.command(name='classes', pass_context=True)
-    # async def lookup_classes(self, search=None):
-    #     '''Lookup Classes'''
-    #     CATEGORY = 'Classes'
-    #     if search is None:
-    #         url = '{}{}'.format(BASEURL, CATEGORY)
-    #         menu_pages = await _present_list(self, url, CATEGORY)
-    #         await self.bot.say('{} pages'.format(len(menu_pages)))
-    #         await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
-    #
-    #     elif search is not None:
-    #         if ' ' in search:
-    #             search = search.replace(' ', '+')
-    #         search = search.replace(' ','+')
-    #         url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
-    #         await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
-    #
-    # @dnd.command(name='monsters', pass_context=True)
-    # async def lookup_monsters(self, search=None):
-    #     '''Lookup Monsters'''
-    #     CATEGORY = 'monsters'
-    #     if search is None:
-    #         url = '{}{}'.format(BASEURL, CATEGORY)
-    #         menu_pages = await _present_list(self, url, CATEGORY)
-    #         await self.bot.say('{} pages'.format(len(menu_pages)))
-    #         await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
-    #
-    #     elif search is not None:
-    #         if ' ' in search:
-    #             search = search.replace(' ', '+')
-    #         search = search.replace(' ','+')
-    #         url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
-    #         await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
-    #
-    # @dnd.command(name='equipment', pass_context=True)
-    # async def lookup_equipment(self, search=None):
-    #     '''Lookup Equpiment'''
-    #     CATEGORY = 'equipment'
-    #     if search is None:
-    #         url = '{}{}'.format(BASEURL, CATEGORY)
-    #         menu_pages = await _present_list(self, url, CATEGORY)
-    #         await self.bot.say('{} pages'.format(len(menu_pages)))
-    #         await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
-    #
-    #     elif search is not None:
-    #         if ' ' in search:
-    #             search = search.replace(' ', '+')
-    #         search = search.replace(' ','+')
-    #         url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
-    #         await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
 
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
