@@ -27,7 +27,7 @@ class DND:
             await send_cmd_help(ctx)
             return
 
-    @dnd.command(name='s', pass_context=True)
+    @dnd.command(name='spells', pass_context=True)
     async def lookup_spells(self, ctx, *, query=None):
         '''Lookup Spells'''
         CATEGORY = 'Spells'
