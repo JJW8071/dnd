@@ -63,7 +63,7 @@ class DND:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
-            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=60)
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
         elif search is not None:
             if ' ' in search:
                 search = search.replace(' ', '+')
@@ -90,11 +90,6 @@ class DND:
             message=message, user=ctx.message.author, timeout=timeout,
             emoji=["➡", "⬅", "❌", "⏪", "⏩"]
         )
-        # await self.bot.say(SELECTION.format(CATEGORY))
-        # answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
-        # if answer is not None:
-        #     await self.bot.say('Process choice for choice: {}'.format(answer))
-            #Write URL item processing function (CATEGORY, URL)
         if react is None:
             try:
                 try:
@@ -105,6 +100,11 @@ class DND:
                     await self.bot.remove_reaction(message, "❌", self.bot.user)
                     await self.bot.remove_reaction(message, "➡", self.bot.user)
                     await self.bot.remove_reaction(message,"⏩", self.bot.user)
+                await self.bot.say(SELECTION.format(CATEGORY))
+                answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
+                if answer is not None:
+                    await self.bot.say('Process choice for choice: {}'.format(answer))
+                    # Write URL item processing function (CATEGORY, URL)
             except:
                 pass
             return None
