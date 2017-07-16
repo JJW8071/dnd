@@ -14,7 +14,7 @@ numbs = {
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
-
+SELECTION = 'Enter selection for more {} information.'
 class DND:
     '''D&D Lookup Stuff'''
 
@@ -58,14 +58,12 @@ class DND:
         await self._process_category(ctx, search, CATEGORY)
 
 
-
-
     async def _process_category(self, ctx, search, CATEGORY):
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
-            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30)
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=60)
         elif search is not None:
             if ' ' in search:
                 search = search.replace(' ', '+')
@@ -92,6 +90,10 @@ class DND:
             message=message, user=ctx.message.author, timeout=timeout,
             emoji=["➡", "⬅", "❌", "⏪", "⏩"]
         )
+        answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
+        if answer is not None:
+            await self.bot.say('Process choice for choice: {}'.format(answer))
+            #Write URL item processing function (CATEGORY, URL)
         if react is None:
             try:
                 try:
