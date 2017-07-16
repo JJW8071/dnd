@@ -135,8 +135,8 @@ class DND:
                     # Write URL item processing function (CATEGORY, URL)
                 else:
                     try:
-                    return await\
-                        self.bot.delete_message(message)
+                        return await\
+                            self.bot.delete_message(message)
                     except:
                         pass
 
