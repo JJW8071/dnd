@@ -15,6 +15,7 @@ numbs = {
 
 BASEURL = 'http://dnd5eapi.co/api/'
 SELECTION = 'Enter selection for more {} information.'
+
 class DND:
     '''D&D Lookup Stuff'''
 
@@ -92,6 +93,10 @@ class DND:
         )
         if react is None:
             try:
+                await self.bot.say(SELECTION.format(CATEGORY))
+                answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
+                if answer is not None:
+                    await self.bot.say('Process choice for choice: {}'.format(answer))
                 try:
                     await self.bot.clear_reactions(message)
                 except:
@@ -100,10 +105,6 @@ class DND:
                     await self.bot.remove_reaction(message, "❌", self.bot.user)
                     await self.bot.remove_reaction(message, "➡", self.bot.user)
                     await self.bot.remove_reaction(message,"⏩", self.bot.user)
-                await self.bot.say(SELECTION.format(CATEGORY))
-                answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
-                if answer is not None:
-                    await self.bot.say('Process choice for choice: {}'.format(answer))
                     # Write URL item processing function (CATEGORY, URL)
             except:
                 pass
@@ -128,9 +129,15 @@ class DND:
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
             else:
+                await self.bot.say(SELECTION.format(CATEGORY))
+                answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
+                if answer is not None:
+                    await self.bot.say('Process choice for choice: {}'.format(answer))
+                    # Write URL item processing function (CATEGORY, URL)
                 try:
                     return await\
-                        self.bot.delete_message(message)
+                    await self.bot.clear_reactions(message)
+                        # self.bot.delete_message(message)
                 except:
                     pass
 
