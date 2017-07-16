@@ -14,7 +14,7 @@ numbs = {
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
-SELECTION = 'Enter selection for more {}information.'.format(CATEGORY)
+SELECTION = 'Enter selection for more {}information.'
 class DND:
     '''D&D Lookup Stuff'''
 
