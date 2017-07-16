@@ -63,7 +63,7 @@ class DND:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('{} pages'.format(len(menu_pages)))
-            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, CATEGORY)
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category=CATEGORY)
         elif search is not None:
             if ' ' in search:
                 search = search.replace(' ', '+')
@@ -72,7 +72,7 @@ class DND:
             json_file = await _get_file(url)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
 
-    async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30, CATEGORY=''):
+    async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30, category=''):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
         cog = cog_list[page]
@@ -92,7 +92,7 @@ class DND:
         )
         if react is None:
             try:
-                await self.bot.say(SELECTION.format(CATEGORY+' '))
+                await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
                 if answer is not None:
                     await self.bot.say('Process choice for choice: {}'.format(answer))
@@ -128,7 +128,7 @@ class DND:
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
             else:
-                await self.bot.say(SELECTION.format(CATEGORY+' '))
+                await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 if answer is not None:
                     await self.bot.say('Process choice for choice: {}'.format(answer))
