@@ -14,8 +14,7 @@ numbs = {
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
-SELECTION = 'Enter selection for more {} information.'
-
+SELECTION = 'Enter selection for more {} information.'.format(CATEGORY)
 class DND:
     '''D&D Lookup Stuff'''
 
@@ -93,7 +92,7 @@ class DND:
         )
         if react is None:
             try:
-                await self.bot.say(SELECTION.format(CATEGORY))
+                await self.bot.say(SELECTION)
                 answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
                 if answer is not None:
                     await self.bot.say('Process choice for choice: {}'.format(answer))
@@ -129,15 +128,14 @@ class DND:
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
             else:
-                await self.bot.say(SELECTION.format(CATEGORY))
-                answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
+                await self.bot.say(SELECTION)
+                answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 if answer is not None:
                     await self.bot.say('Process choice for choice: {}'.format(answer))
                     # Write URL item processing function (CATEGORY, URL)
                 try:
                     return await\
-                    await self.bot.clear_reactions(message)
-                        # self.bot.delete_message(message)
+                        self.bot.delete_message(message)
                 except:
                     pass
 
