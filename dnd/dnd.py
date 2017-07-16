@@ -90,10 +90,10 @@ class DND:
             message=message, user=ctx.message.author, timeout=timeout,
             emoji=["➡", "⬅", "❌", "⏪", "⏩"]
         )
-        await self.bot.say(SELECTION.format(CATEGORY))
-        answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
-        if answer is not None:
-            await self.bot.say('Process choice for choice: {}'.format(answer))
+        # await self.bot.say(SELECTION.format(CATEGORY))
+        # answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
+        # if answer is not None:
+        #     await self.bot.say('Process choice for choice: {}'.format(answer))
             #Write URL item processing function (CATEGORY, URL)
         if react is None:
             try:
@@ -108,30 +108,31 @@ class DND:
             except:
                 pass
             return None
-        reacts = {v: k for k, v in numbs.items()}
-        react = reacts[react.reaction.emoji]
-        if react == "next":
-            next_page = (page + 1) % len(cog_list)
-            return await self.cogs_menu(ctx, cog_list, message=message,
-                                        page=next_page, timeout=timeout)
-        elif react == "back":
-            next_page = (page - 1) % len(cog_list)
-            return await self.cogs_menu(ctx, cog_list, message=message,
-                                        page=next_page, timeout=timeout)
-        elif react == "rewind":
-            next_page = (page - 5) % len(cog_list)
-            return await self.cogs_menu(ctx, cog_list, message=message,
+        elif react is not None:
+            reacts = {v: k for k, v in numbs.items()}
+            react = reacts[react.reaction.emoji]
+            if react == "next":
+                next_page = (page + 1) % len(cog_list)
+                return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
-        elif react == "fast_forward":
-            next_page = (page + 5) % len(cog_list)
-            return await self.cogs_menu(ctx, cog_list, message=message,
+            elif react == "back":
+                next_page = (page - 1) % len(cog_list)
+                return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
-        else:
-            try:
-                return await\
-                    self.bot.delete_message(message)
-            except:
-                pass
+            elif react == "rewind":
+                next_page = (page - 5) % len(cog_list)
+                return await self.cogs_menu(ctx, cog_list, message=message,
+                                                page=next_page, timeout=timeout)
+            elif react == "fast_forward":
+                next_page = (page + 5) % len(cog_list)
+                return await self.cogs_menu(ctx, cog_list, message=message,
+                                                page=next_page, timeout=timeout)
+            else:
+                try:
+                    return await\
+                        self.bot.delete_message(message)
+                except:
+                    pass
 
 
 
