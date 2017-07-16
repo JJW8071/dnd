@@ -133,11 +133,12 @@ class DND:
                 if answer is not None:
                     await self.bot.say('Process choice for choice: {}'.format(answer.content.lower().strip())
                     # Write URL item processing function (CATEGORY, URL)
-                try:
+                else:
+                    try:
                     return await\
                         self.bot.delete_message(message)
-                except:
-                    pass
+                    except:
+                        pass
 
 
 
