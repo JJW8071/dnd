@@ -90,6 +90,7 @@ class DND:
             message=message, user=ctx.message.author, timeout=timeout,
             emoji=["➡", "⬅", "❌", "⏪", "⏩"]
         )
+        await self.bot.say(SELECTION.format(CATEGORY))
         answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
         if answer is not None:
             await self.bot.say('Process choice for choice: {}'.format(answer))
