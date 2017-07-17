@@ -14,6 +14,17 @@ numbs = {
     "exit": "❌",
 }
 
+# schema=(
+#     'spells':{'higher_level','range','components','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url'},
+#     'equipment':{'equipment_category','weapon_category','weapon_range','category_range','cost',},
+#     'monsters':{},
+#     'classes':{},
+#     'features':{'level','class'},
+#     'races':{},
+#     )
+
+
+
 COLORS = {
     'spells' : discord.Color.purple(),
     'equipment': discord.Color.blue(),
@@ -174,9 +185,9 @@ class DND:
         elif category.lower() in COLORS:
             category=category.lower()
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
-            if category == 'spells':
-                spell_schema=('higher_level','range','components','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url')
-                for s in spell_schema:
+            # for s in schema[category]:
+            for s in range(0,len(json_file)-1):
+                if s[0] not in {'_id','index','name'}:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if isinstance(json_file[s],list):
