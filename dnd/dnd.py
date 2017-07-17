@@ -16,22 +16,21 @@ numbs = {
 
 COLORS = {
     'spells' : discord.Color.purple(),
-    'equipment': discord.Color.blue(),
-    'starting-equipment':discord.Color.blue(),
-    'spellcasting':discord.Color.purple(),
-    'monsters' : discord.Color.red(),
-    'classes' : discord.Color.(0xf29214),
-    'subclasses':discord.Color.(0xf29214),
-    'features': discord.Color.(0xf29214),
-    'levels':discord.Color.(0xf29214),
-    'races': discord.Color.discord.Color.(0xf29214),
-    'subraces':discord.Color.discord.Color.(0xf29214),
-    'traits':discord.Color.(0xf29214),
-    'ability-scores': discord.Color.(0xf29214),
-    'skills' : discord.Color.(0xf29214),
-    'proficiencies' : discord.Color.(0xf29214),
-    'languages': discord.Color.(0xf29214),
-
+    # 'equipment': discord.Color.blue(),
+    # 'starting-equipment':discord.Color.blue(),
+    # 'spellcasting':discord.Color.purple(),
+    # 'monsters' : discord.Color.red(),
+    # 'classes' : discord.Color.(0xf29214),
+    # 'subclasses':discord.Color.(0xf29214),
+    # 'features': discord.Color.(0xf29214),
+    # 'levels':discord.Color.(0xf29214),
+    # 'races': discord.Color.discord.Color.(0xf29214),
+    # 'subraces':discord.Color.discord.Color.(0xf29214),
+    # 'traits':discord.Color.(0xf29214),
+    # 'ability-scores': discord.Color.(0xf29214),
+    # 'skills' : discord.Color.(0xf29214),
+    # 'proficiencies' : discord.Color.(0xf29214),
+    # 'languages': discord.Color.(0xf29214),
 }
 
 BASEURL = 'http://dnd5eapi.co/api/'
@@ -79,8 +78,7 @@ class DND:
         CATEGORY = 'equipment'
         await self._process_category(ctx, search, CATEGORY)
 
-
-    async def _process_category(self, ctx, search, CATEGORY):
+    async def _process_category(self, ctx, search=None, CATEGORY=None):
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
@@ -164,9 +162,9 @@ class DND:
     async def _process_item(self, ctx='', url='', category=''):
         json_file = await _get_file(url)
         if 'count' in json_file:
-            menu_pages = await _present_list(self, url, category)
+            menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('Press ⏺ to select:')
-            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category=category)
+            await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         embed=discord.embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
         if category == 'spells':
             embed.add_field(name='spells',value='spells')
