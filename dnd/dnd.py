@@ -193,8 +193,11 @@ class DND:
                 else:
                     # await self.bot.say(embed=em)
                     pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
+                    page_list = []
                     for page in pages:
-                        if page == pages[0]:
+                        page_list.append(page)
+                    for page in page_list:
+                        if page == page_list[0]:
                             em.set_description(desc)
                             await self.bot.say(embed=em)
                         em=discord.Embed(color=COLORS[category],title='',description=page)
