@@ -186,29 +186,30 @@ class DND:
             category=category.lower()
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
             # for s in schema[category]:
-            for i in range(0,len(json_file)-1):
-                s = json_file[i][0]
-                if s not in {'_id','index','name'}:
-                    s2 = s.replace('_',' ')
-                    if s in json_file:
-                        if isinstance(json_file[s],list):
+            keys = json_file.keys
+            for s in keys:
+                print(key)
+                if key not in {'_id','index','name'}:
+                    key2 = key.replace('_',' ')
+                    if key in json_file:
+                        if isinstance(json_file[key],list):
                             try:
-                                em.add_field(name=s2,value='\n'.join(j['name'] for j in json_file[s]))
+                                em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
                             except:
-                                em.add_field(name=s2,value='\n'.join(j for j in json_file[s]))
-                        elif isinstance(json_file[s],str):
-                            em.add_field(name=s2,value=json_file[s])
-                        elif isinstance(json_file[s],tuple):
+                                em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                        elif isinstance(json_file[key],str):
+                            em.add_field(name=key2,value=json_file[key])
+                        elif isinstance(json_file[key],tuple):
                             try:
-                                em.add_field(name=s2,value='\n'.join(j['name'] for j in json_file[s]))
+                                em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
                             except:
-                                em.add_field(name=s2,value='\n'.join(j for j in json_file[s]))
-                        elif isinstance(json_file[s],dict):
-                            em.add_field(name=s2,value=json_file[s]['name'])
-                        elif isinstance(json_file[s],int):
-                            em.add_field(name=s2,value=json_file[s])
+                                em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                        elif isinstance(json_file[key],dict):
+                            em.add_field(name=key2,value=json_file[key]['name'])
+                        elif isinstance(json_file[key],int):
+                            em.add_field(name=key2,value=json_file[key])
                         else:
-                            em.add_field(name=s2,value='something else detected')
+                            em.add_field(name=key2,value='something else detected')
 
 
             await self.bot.say(embed=em)
