@@ -184,7 +184,9 @@ class DND:
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS:
             category=category.lower()
-            em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n\n'.join(json_file['desc']))
+            em=discord.Embed(color=COLORS[category],title=json_file['name'],description='',
+            try:
+                em.add_field(name='Description',value='\n\n'.join(json_file['desc']))
             keys = json_file.keys()
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
