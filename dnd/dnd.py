@@ -16,6 +16,7 @@ numbs = {
 
 BASEURL = 'http://dnd5eapi.co/api/'
 SELECTION = 'Enter selection for more {}information.'
+
 class DND:
     '''D&D Lookup Stuff'''
 
@@ -130,6 +131,7 @@ class DND:
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 if answer is not None:
                     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
+                    await self._process_item(url, category=CATEGORY)
                     # Write URL item processing function (CATEGORY, URL)
             else:
                 try:
@@ -137,6 +139,11 @@ class DND:
                 except:
                     pass
 
+    async def _process_item(url, category=''):
+        json_file = await self._get_file(url)
+        if category ='spells':
+            await self.bot.say('Initiate processing spells')
+            embed=discord.embed(color=discord.Color.purple(),title=json_file['name'],description='\n'.join(json_file['desc'][0])
 
 
 async def _get_file(url):
