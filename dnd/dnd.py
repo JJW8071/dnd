@@ -177,16 +177,16 @@ class DND:
             if category == 'spells':
                 spell_schema=('higher_level','range','components','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url')
                 for s in spell_schema:
+                    s2 = s.replace('_',' ')
                     if s in json_file:
                         if json_file[s] is list:
-                            s2 = s.replace('_',' ')
-                            json_file_list = json_file[s][0]
                             try:
-                                em.add_field(name=s2.title(),value='\n\n'.join(json_file_list[i]['name'].strip() for i in json_file[s]))
+                                em.add_field(name=s2.title(),value='\n'.join(json_file[s][i]['name'] for i in json_file[s]))
+                                print('try worked')
                             except:
-                                em.add_field(name=s2.title(),value='\n\n'.join(json_file[s].strip()))
+                                em.add_field(name=s2.title(),value='\n'.join(json_file[s]))
                         else:
-                            em.add_field(name=s.title(),value=json_file[s])
+                            em.add_field(name=s2.title(),value=json_file[s])
             await self.bot.say(embed=em)
 
 async def _get_file(url):
