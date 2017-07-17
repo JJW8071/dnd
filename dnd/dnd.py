@@ -140,7 +140,7 @@ class DND:
                     pass
 
     async def _process_item(url, category=''):
-        json_file = await self._get_file(url)
+        json_file = await _get_file(url)
         if category == 'spells':
             embed=discord.embed(color=discord.Color.purple(),title=json_file['name'],description='\n'.join(json_file['desc'][0])
 
