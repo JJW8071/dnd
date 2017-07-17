@@ -179,15 +179,14 @@ class DND:
                 for s in spell_schema:
                     s2 = s.replace('_',' ')
                     if s in json_file:
-                        if not isinstance(json_file[s], str):
-                            jlist = json_file[s][0]
-                            try:
-                                em.add_field(name=s2.title(),value='\n'.join(j['name'] for j in jslit))
-                                print('try worked')
-                            except:
-                                em.add_field(name=s2.title(),value='\n'.join(j for j in json_file[s]))
+                        if isinstance(json_file[s],list):
+                            em.add_field(name=s2,value='list detected')
+                        elif isinstance(json_file[s],str):
+                            em.add_field(name=s2,value='str detected')
                         else:
-                            em.add_field(name=s2.title(),value=json_file[s])
+                            em.add_field(name=s2,value='something else detected')
+
+
             await self.bot.say(embed=em)
 
 async def _get_file(url):
