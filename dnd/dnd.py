@@ -183,7 +183,7 @@ class DND:
                             jlist = json_file[s]
                             try:
                                 package = []
-                                for i in range{0,len(jlist)-1}:
+                                for i in range(0,len(jlist)-1):
                                     pacakge.append(jlist[i]['name'])
                                     em.add_field(name=s2.title(),value='\n'.join(package))
                                 print('try worked')
