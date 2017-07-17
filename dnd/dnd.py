@@ -186,8 +186,9 @@ class DND:
             category=category.lower()
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
             # for s in schema[category]:
-            for s in range(0,len(json_file)-1):
-                if s[0] not in {'_id','index','name'}:
+            for i in range(0,len(json_file)-1):
+                s = json_file[i][0]
+                if s not in {'_id','index','name'}:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if isinstance(json_file[s],list):
