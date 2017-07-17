@@ -185,6 +185,8 @@ class DND:
                             em.add_field(name=s2,value='str detected')
                         elif isinstance(json_file[s],tuple):
                                 em.add_field(name=s2,value='tuple detected')
+                        elif isinstance(json_file[s],dict):
+                            em.add_field(name=s2,value='dict detected')
                         else:
                             em.add_field(name=s2,value='something else detected')
 
