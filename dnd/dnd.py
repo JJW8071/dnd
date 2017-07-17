@@ -165,7 +165,7 @@ class DND:
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
-        embed=discord.embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
+        embed=discord.Embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
         if category == 'spells':
             embed.add_field(name='spells',value='spells')
         await self.bot.say(embed=embed)
