@@ -9,6 +9,7 @@ numbs = {
     "rewind" : "⏪",
     "next": "➡",
     "back": "⬅",
+    "choose": "⏺",
     "fast_forward": "⏩",
     "exit": "❌",
 }
@@ -74,12 +75,8 @@ class DND:
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30, category=''):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
+        await self.bot.say('Press ⏺ to select:')   
         cog = cog_list[page]
-        await self.bot.say(SELECTION.format(category+' '))
-        answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
-        if answer is not None:
-            await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
-
         if not message:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
@@ -96,10 +93,6 @@ class DND:
         )
         if react is None:
             try:
-                # await self.bot.say(SELECTION.format(category+' '))
-                # answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
-                # if answer is not None:
-                #     await self.bot.say('Process choice : {}'.format(answercontent.lower().strip()))
                 try:
                     await self.bot.clear_reactions(message)
                 except:
@@ -108,7 +101,6 @@ class DND:
                     await self.bot.remove_reaction(message, "❌", self.bot.user)
                     await self.bot.remove_reaction(message, "➡", self.bot.user)
                     await self.bot.remove_reaction(message,"⏩", self.bot.user)
-                    # Write URL item processing function (CATEGORY, URL)
             except:
                 pass
             return None
@@ -131,11 +123,11 @@ class DND:
                 next_page = (page + 5) % len(cog_list)
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
-            # else:
-                # await self.bot.say(SELECTION.format(category+' '))
-                # answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
-                # if answer is not None:
-                #     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
+            elif react == "choose":
+                await self.bot.say(SELECTION.format(category+' '))
+                answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
+                if answer is not None:
+                    await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
                     # Write URL item processing function (CATEGORY, URL)
             else:
                 try:
