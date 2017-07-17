@@ -180,7 +180,7 @@ class DND:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if json_file[s] is list:
-                            jlist = json_file[s]
+                            jlist = json_file[s][0]
                             try:
                                 package = []
                                 for i in range(0,len(jlist)-1):
