@@ -75,13 +75,14 @@ class DND:
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30, category=''):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
-        await self.bot.say('Press ⏺ to select:')   
+        await self.bot.say('Press ⏺ to select:')
         cog = cog_list[page]
         if not message:
             message =\
                 await self.bot.send_message(ctx.message.channel, embed=cog)
             await self.bot.add_reaction(message, "⏪")
             await self.bot.add_reaction(message, "⬅")
+            await self.bot.add_reaction(message,"⏺")
             await self.bot.add_reaction(message, "❌")
             await self.bot.add_reaction(message, "➡")
             await self.bot.add_reaction(message, "⏩")
@@ -89,7 +90,7 @@ class DND:
             message = await self.bot.edit_message(message, embed=cog)
         react = await self.bot.wait_for_reaction(
             message=message, user=ctx.message.author, timeout=timeout,
-            emoji=["➡", "⬅", "❌", "⏪", "⏩"]
+            emoji=["➡", "⬅", "❌", "⏪", "⏩","⏺"]
         )
         if react is None:
             try:
@@ -99,6 +100,7 @@ class DND:
                     await self.bot.remove_reaction(message,"⏪", self.bot.user)
                     await self.bot.remove_reaction(message, "⬅", self.bot.user)
                     await self.bot.remove_reaction(message, "❌", self.bot.user)
+                    await self.bot.remove_reaction(message,"⏺",self.bot.user)
                     await self.bot.remove_reaction(message, "➡", self.bot.user)
                     await self.bot.remove_reaction(message,"⏩", self.bot.user)
             except:
