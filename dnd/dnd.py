@@ -180,8 +180,12 @@ class DND:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if json_file[s] is list:
+                            jlist = json_file[s]
                             try:
-                                em.add_field(name=s2.title(),value='\n'.join(json_file[s][i]['name'] for i in json_file[s]))
+                                package = []
+                                for i in range{0,len(jlist)-1}:
+                                    pacakge.append(jlist[i]['name'])
+                                    em.add_field(name=s2.title(),value='\n'.join(package))
                                 print('try worked')
                             except:
                                 em.add_field(name=s2.title(),value='\n'.join(json_file[s]))
