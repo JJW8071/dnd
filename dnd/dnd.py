@@ -189,7 +189,7 @@ class DND:
                 desc = '\n\n'.join(json_file['desc'])
                 print('desc: '+str(len(desc)))
                 if len(desc) < 750:
-                    em.set_description(desc)
+                    em=discord.Embed(color=COLORS[category],title=json_file['name'],description=desc)
                 else:
                     # await self.bot.say(embed=em)
                     pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
