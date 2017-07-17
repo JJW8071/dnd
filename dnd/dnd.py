@@ -63,6 +63,7 @@ class DND:
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
+            await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category=CATEGORY)
         elif search is not None:
             if ' ' in search:
@@ -75,7 +76,6 @@ class DND:
     async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30, category=''):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
-        await self.bot.say('Press ⏺ to select:')
         cog = cog_list[page]
         if not message:
             message =\
