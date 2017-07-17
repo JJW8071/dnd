@@ -187,9 +187,9 @@ class DND:
             keys = json_file.keys()
             if 'desc' in keys:
                 desc = '\n\n'.join(json_file['desc'])
-                print('desc: '+len(desc))
+                print('desc: '+str(len(desc)))
                 pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
-                print('pages: '+len(pages))
+                print('pages: '+str(len(pages)))
                 # for page in pages:
                 #     if page == pages[0]:
                 #         em.set_description=page
