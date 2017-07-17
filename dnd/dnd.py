@@ -171,7 +171,7 @@ class DND:
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
-        elif category in COLORS:
+        elif category.lower() in COLORS:
             em=discord.Embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
             if category is not None:
                 if category == 'spells':
