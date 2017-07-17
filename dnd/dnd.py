@@ -179,16 +179,15 @@ class DND:
                 for s in spell_schema:
                     s2 = s.replace('_',' ')
                     if s in json_file:
-                        if len(json_file[s]) > 0:
+                        try:
                             jlist = json_file[s]
-                            try:
-                                package = []
-                                for i in range(0,len(jlist)-1):
-                                    pacakge.append(jlist[i]['name'])
-                                    em.add_field(name=s2.title(),value='\n'.join(package))
-                                print('try worked')
-                            except:
-                                em.add_field(name=s2.title(),value='\n'.join(json_file[s]))
+                            package = []
+                            for i in range(0,len(jlist)-1):
+                                pacakge.append(jlist[i]['name'])
+                                em.add_field(name=s2.title(),value='\n'.join(package))
+                            print('try worked')
+                        except:
+                            em.add_field(name=s2.title(),value='\n'.join(json_file[s]))
                         else:
                             em.add_field(name=s2.title(),value=json_file[s])
             await self.bot.say(embed=em)
