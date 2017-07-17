@@ -182,8 +182,7 @@ class DND:
                             s2 = s.replace('_',' ')
                             json_file_list = json_file[s]
                             try:
-                                em.add_field(name=s2.title(),value='\n\n'.join(json_file_list[i]['name'].strip() for i in json_file[s])
-                                print('try worked')
+                                em.add_field(name=s2.title(),value='\n\n'.join(json_file_list[i]['name'].strip() for i in json_file[s]))
                             else:
                                 em.add_field(name=s2.title(),value='\n\n'.join(json_file[s].strip()))
                         else:
