@@ -180,15 +180,12 @@ class DND:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if not isinstance(json_file[s], str):
+                            jlist = json_file[s]
                             try:
-                                jlist = json_file[s]
-                                package = []
-                                for i in range(0,len(jlist)-1):
-                                    pacakge.append(jlist[i]['name'])
-                                    em.add_field(name=s2.title(),value='\n'.join(package))
+                                em.add_field(name=s2.title(),value='\n'.join(j['name'] for j in jslit))
                                 print('try worked')
                             except:
-                                em.add_field(name=s2.title(),value='\n'.join(json_file[s]))
+                                em.add_field(name=s2.title(),value='\n'.join(j for j in json_file[s]))
                         else:
                             em.add_field(name=s2.title(),value=json_file[s])
             await self.bot.say(embed=em)
