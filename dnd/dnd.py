@@ -179,8 +179,8 @@ class DND:
                 for s in spell_schema:
                     s2 = s.replace('_',' ')
                     if s in json_file:
-                        if json_file[s] is list:
-                            jlist = json_file[s][0]
+                        if len(json_file[s]) > 0:
+                            jlist = json_file[s]
                             try:
                                 package = []
                                 for i in range(0,len(jlist)-1):
