@@ -181,8 +181,9 @@ class DND:
                         if json_file[s] is list:
                             # s2=s.replace('_',' ')
                             if 'name' in json_file[s]:
-                                em.add_field(name=s.title(),value='\n'.join(json_file[s]['name']))
-                            em.add_field(name=s.title(),value='\n'.join(json_file[s]))
+                                em.add_field(name=s.title(),value='\n'.join(json_file[s][0]['name']))
+                            else:
+                                em.add_field(name=s.title(),value='\n'.join(json_file[s]))
                         else:
                             em.add_field(name=s.title(),value=json_file[s])
             await self.bot.say(embed=em)
