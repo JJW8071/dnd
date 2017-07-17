@@ -175,14 +175,15 @@ class DND:
             category=category.lower()
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
             if category == 'spells':
-                spell_schema=('higher_level','range','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses')
+                spell_schema=('higher_level','range','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url')
                 for s in spell_schema:
                     if s in json_file:
                         if json_file[s] is list:
-                            print('item list detected')
                             s2 = s.replace('_',' ')
-                            if 'name' in json_file[s][0]:
-                                em.add_field(name=s2.title(),value='\n\n'.join(json_file[s][0]['name'].strip))
+                            json_file_list = json_file[s]
+                            try:
+                                em.add_field(name=s2.title(),value='\n\n'.join(json_file_list[i]['name'].strip() for i in json_file[s])
+                                print('try worked')
                             else:
                                 em.add_field(name=s2.title(),value='\n\n'.join(json_file[s].strip()))
                         else:
