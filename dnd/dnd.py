@@ -86,15 +86,16 @@ class DND:
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY,search)
-            self._process_item(ctx=ctx,url=url,category=category)
+            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
+            self._process_item(ctx=ctx,url=url,category=CATEGORY)
             # except:
         else:
             if ' ' in search:
                 search = search.replace(' ', '+')
             search = search.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
-            json_file = await _get_file(url)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
+            json_file = await _get_file(url)
 
     async def cogs_menu(self, ctx, cog_list: list, category: str='', message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
