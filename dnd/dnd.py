@@ -191,12 +191,15 @@ class DND:
                 if len(desc) < 750:
                     em.set_description(desc)
                 else:
-                    await self.bot.say(embed=em)
+                    # await self.bot.say(embed=em)
                     pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
                     for page in pages:
+                        if page == pages[0]:
+                            em.set_description(desc)
+                            await self.bot.say(embed=em)
                         em=discord.Embed(color=COLORS[category],title='',description=page)
                         await self.bot.say(embed=em)
-                    em=discord.Embed(color=COLORS[category],title='',description=page)
+                    em=discord.Embed(color=COLORS[category],title='',description='')
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
                     key2 = key.replace('_',' ').title()
