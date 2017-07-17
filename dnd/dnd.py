@@ -180,7 +180,7 @@ class DND:
                     if s in json_file:
                         if json_file[s] is list:
                             s2 = s.replace('_',' ')
-                            json_file_list = json_file[s]
+                            json_file_list = json_file[s][0]
                             try:
                                 em.add_field(name=s2.title(),value='\n\n'.join(json_file_list[i]['name'].strip() for i in json_file[s]))
                             except:
