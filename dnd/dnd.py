@@ -187,7 +187,7 @@ class DND:
             keys = json_file.keys()
             if 'desc' in keys:
                 em.add_field(name='Description',value='')
-                desc = chat.pagify('\n\n'.join(json_file['desc'])
+                desc = chat.pagify('\n\n'.join(json_file['desc']),delims=['\n'], escape=True, shorten_by=8, page_length=2000)
                 for d in desc:
                     em.add_field(name='',value=d, inline=False)
             for key in keys:
