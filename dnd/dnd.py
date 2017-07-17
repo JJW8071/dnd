@@ -175,7 +175,7 @@ class DND:
             category=category.lower()
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
             if category == 'spells':
-                spell_schema=('higher_level','range','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url')
+                spell_schema=('higher_level','range','components','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url')
                 for s in spell_schema:
                     if s in json_file:
                         if json_file[s] is list:
@@ -183,7 +183,7 @@ class DND:
                             json_file_list = json_file[s]
                             try:
                                 em.add_field(name=s2.title(),value='\n\n'.join(json_file_list[i]['name'].strip() for i in json_file[s]))
-                            else:
+                            except:
                                 em.add_field(name=s2.title(),value='\n\n'.join(json_file[s].strip()))
                         else:
                             em.add_field(name=s.title(),value=json_file[s])
