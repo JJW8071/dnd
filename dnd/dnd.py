@@ -165,6 +165,7 @@ class DND:
                     pass
 
     async def _process_item(self, ctx=None, url=None, category=None):
+        await self.bot.say('_process_item\nurl: {}\ncategory: {}'.format(url,category))
         json_file = await _get_file(url)
         if 'count' in json_file:
             menu_pages = await _present_list(self, url, CATEGORY)
