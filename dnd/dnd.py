@@ -183,26 +183,21 @@ class DND:
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS:
             category=category.lower()
-            em=discord.Embed(color=COLORS[category],title=json_file['name'],description='')
             keys = json_file.keys()
             if 'desc' in keys:
-                desc = '\n\n'.join(json_file['desc'])
-                print('desc: '+str(len(desc)))
-                if len(desc) < 750:
-                    em=discord.Embed(color=COLORS[category],title=json_file['name'],description=desc)
-                else:
-                    # await self.bot.say(embed=em)
-                    pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
-                    page_list = []
-                    for page in pages:
-                        page_list.append(page)
-                    for page in page_list:
-                        if page == page_list[0]:
-                            em.set_description(desc)
-                            await self.bot.say(embed=em)
+                desc_pages = []
+                desc_pages.append(chat.pagify('\n'.join(json_file['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000))
+                # for page in desc:
+                #     desc_pages.append(page)
+                for page in desc_pages:
+                    if page == desc_pages[0]:
+                        em=discord.Embed(color=COLORS[category],title=json_file['name'],description=page)
+                        await self.bot.say(embed=em)
+                    elif page == desc_pages[len(desc_pages)-1]:
+                        em=discord.Embed(color=COLORS[category],title='',description=page)
+                    else:
                         em=discord.Embed(color=COLORS[category],title='',description=page)
                         await self.bot.say(embed=em)
-                    em=discord.Embed(color=COLORS[category],title='',description='')
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
                     key2 = key.replace('_',' ').title()
