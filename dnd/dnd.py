@@ -87,7 +87,7 @@ class DND:
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY,search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
-            self._process_item(ctx=ctx,url=url,category=CATEGORY)
+            await self._process_item(ctx=ctx,url=url,category=CATEGORY)
             # except:
         else:
             if ' ' in search:
