@@ -187,7 +187,7 @@ class DND:
             keys = json_file.keys()
             if 'desc' in keys:
                 em.add_field(name='Description',value='')
-                desc = chat.pagify('\n\n'.join(json_file['desc']),delims=['\n'], escape=True, shorten_by=8, page_length=1000)
+                desc = chat.pagify('\n\n'.join(json_file['desc']),delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
                 if len(desc) > 1:
                     await self.bot.say(embed=em)
                     for d in desc:
