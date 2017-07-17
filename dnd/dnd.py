@@ -14,6 +14,26 @@ numbs = {
     "exit": "❌",
 }
 
+COLORS = {
+    'spells' : discord.Color.purple(),
+    'equipment': discord.Color.blue(),
+    'monsters' : discord.Color.red(),
+    'classes' : discord.Color.white(),
+    'subclasses':discord.Color.white(),
+    'features': discord.Color.white(),
+    'spellcasting':discord.Color.white(),
+    'starting-equipment':discord.Color.white(),
+    'levels':discord.Color.white(),
+    'races': discord.Color.white(),
+    'subraces':discord.Color.white(),
+    'traits':discord.Color.white(),
+    'ability-scores': discord.Color.white(),
+    'skills' : discord.Color.white(),
+    'proficiencies' : discord.Color.white(),
+    'languages': discord.Color.white(),
+
+}
+
 BASEURL = 'http://dnd5eapi.co/api/'
 SELECTION = 'Enter selection for more {}information.'
 
@@ -133,7 +153,7 @@ class DND:
                     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
                     url = '{}{}/{}'.format(BASEURL,category,answer.content.lower().strip())
 
-                    await self._process_item(url=url, category=category)
+                    await self._process_item(ctx, url=url, category=category)
                     # Write URL item processing function (CATEGORY, URL)
             else:
                 try:
@@ -141,12 +161,16 @@ class DND:
                 except:
                     pass
 
-    async def _process_item(self, url='', category=''):
+    async def _process_item(self, ctx='', url='', category=''):
         json_file = await _get_file(url)
-        if category == 'spells':
-            embed=discord.embed(color=discord.Color.purple(),title=json_file['name'],description='\n'.join(json_file['desc'][0]))
-
+        if 'count' in json_file:
+            menu_pages = await _present_list(self, url, CATEGORY)
+            await self.bot.say('Press ⏺ to select:')
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category)
+        embed=discord.embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
         await self.bot.say(embed=embed)
+        if category == 'spells':
+
 
 
 async def _get_file(url):
