@@ -180,7 +180,7 @@ class DND:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if not isinstance(json_file[s], str):
-                            jlist = json_file[s]
+                            jlist = json_file[s][0]
                             try:
                                 em.add_field(name=s2.title(),value='\n'.join(j['name'] for j in jslit))
                                 print('try worked')
