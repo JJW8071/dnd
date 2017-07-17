@@ -131,17 +131,17 @@ class DND:
                 next_page = (page + 5) % len(cog_list)
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
-            else:
+            # else:
                 # await self.bot.say(SELECTION.format(category+' '))
                 # answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 # if answer is not None:
                 #     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
                     # Write URL item processing function (CATEGORY, URL)
-                else:
-                    try:
-                        return await self.bot.delete_message(message)
-                    except:
-                        pass
+            else:
+                try:
+                    return await self.bot.delete_message(message)
+                except:
+                    pass
 
 
 
