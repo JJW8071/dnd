@@ -185,10 +185,10 @@ class DND:
             category=category.lower()
             keys = json_file.keys()
             if 'desc' in keys:
+                desc = chat.pagify('\n'.join(json_file['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
                 desc_pages = []
-                desc_pages.append(chat.pagify('\n'.join(json_file['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000))
-                # for page in desc:
-                #     desc_pages.append(page)
+                for page in desc:
+                    desc_pages.append(page)
                 for page in desc_pages:
                     if page == desc_pages[0]:
                         em=discord.Embed(color=COLORS[category],title=json_file['name'],description=page)
@@ -198,6 +198,7 @@ class DND:
                     else:
                         em=discord.Embed(color=COLORS[category],title='',description=page)
                         await self.bot.say(embed=em)
+                # em=discord.Embed(color=COLORS[category],title='',description='')
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
                     key2 = key.replace('_',' ').title()
