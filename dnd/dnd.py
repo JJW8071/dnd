@@ -188,7 +188,7 @@ class DND:
             if 'desc' in keys:
                 desc = '\n\n'.join(json_file['desc'])
                 print('desc: '+str(len(desc)))
-                if len(desc) < 1500:
+                if len(desc) < 750:
                     em=discord.Embed(color=COLORS[category],title='',description=desc)
                 else:
                     await self.bot.say(embed=em)
