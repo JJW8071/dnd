@@ -188,7 +188,7 @@ class DND:
             keys = json_file.keys()
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
-                    key2 = key.replace('_',' ')
+                    key2 = key.replace('_',' ').title()
                     if isinstance(json_file[key],list):
                         try:
                             em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
