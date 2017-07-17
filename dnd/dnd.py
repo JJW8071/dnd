@@ -131,6 +131,8 @@ class DND:
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 if answer is not None:
                     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
+                    url = '{}{}/{}'.format(BASEURL,category,answer.content.lower().strip())
+
                     await self._process_item(url, category=CATEGORY)
                     # Write URL item processing function (CATEGORY, URL)
             else:
