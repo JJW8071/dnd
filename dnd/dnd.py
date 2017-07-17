@@ -172,7 +172,7 @@ class DND:
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS:
-            em=discord.Embed(color=COLORS[category.lower()],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
+            em=discord.Embed(color=COLORS[category.lower()],title=json_file['name'],description='\n'.join(json_file['desc']))
             if category is not None:
                 if category == 'spells':
                     embed.add_field(name='spells',value='spells')
