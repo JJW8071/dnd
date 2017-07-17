@@ -146,6 +146,8 @@ class DND:
         if category == 'spells':
             embed=discord.embed(color=discord.Color.purple(),title=json_file['name'],description='\n'.join(json_file['desc'][0]))
 
+        await self.bot.say(embed=embed)
+
 
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
