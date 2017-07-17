@@ -16,15 +16,15 @@ numbs = {
 
 COLORS = {
     'spells' : discord.Color.purple(),
-    # 'equipment': discord.Color.blue(),
+    'equipment': discord.Color.blue(),
     # 'starting-equipment':discord.Color.blue(),
     # 'spellcasting':discord.Color.purple(),
-    # 'monsters' : discord.Color.red(),
-    # 'classes' : discord.Color.(0xf29214),
+    'monsters' : discord.Color.red(),
+    'classes' : discord.Color.(0xf29214),
     # 'subclasses':discord.Color.(0xf29214),
-    # 'features': discord.Color.(0xf29214),
+    'features': discord.Color.(0xf29214),
     # 'levels':discord.Color.(0xf29214),
-    # 'races': discord.Color.discord.Color.(0xf29214),
+    'races': discord.Color.discord.Color.(0xf29214),
     # 'subraces':discord.Color.discord.Color.(0xf29214),
     # 'traits':discord.Color.(0xf29214),
     # 'ability-scores': discord.Color.(0xf29214),
@@ -84,7 +84,11 @@ class DND:
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
-        elif search is not None:
+        elif search.isnumeric():
+            url = '{}{}/{}'.format(BASEURL,CATEGORY,search)
+            self._process_item(ctx=ctx,url=url,category=category)
+            # except:
+        else:
             if ' ' in search:
                 search = search.replace(' ', '+')
             search = search.replace(' ','+')
@@ -159,16 +163,18 @@ class DND:
                 except:
                     pass
 
-    async def _process_item(self, ctx='', url='', category=''):
+    async def _process_item(self, ctx=None, url=None, category=None):
         json_file = await _get_file(url)
         if 'count' in json_file:
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
-        embed=discord.Embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
-        if category == 'spells':
-            embed.add_field(name='spells',value='spells')
-        await self.bot.say(embed=embed)
+        elif category is in COLORS:
+            em=discord.Embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
+            if category is not None:
+                if category == 'spells':
+                    embed.add_field(name='spells',value='spells')
+            await self.bot.say(embed=em)
 
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
