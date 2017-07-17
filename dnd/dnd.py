@@ -179,7 +179,7 @@ class DND:
                 for s in spell_schema:
                     s2 = s.replace('_',' ')
                     if s in json_file:
-                        if not instance(json_file[s], str):
+                        if not isinstance(json_file[s], str):
                             try:
                                 jlist = json_file[s]
                                 package = []
