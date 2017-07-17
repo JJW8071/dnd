@@ -85,7 +85,7 @@ class DND:
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
-            url = '{}{}/{}'.format(BASEURL,CATEGORY,search)
+            url = '{}{}/{}'.format(BASEURL,CATEGORY.lowercase(),search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
             await self._process_item(ctx=ctx,url=url,category=CATEGORY)
             # except:
@@ -93,7 +93,7 @@ class DND:
             if ' ' in search:
                 search = search.replace(' ', '+')
             search = search.replace(' ','+')
-            url = '{}{}/?name={}'.format(BASEURL, CATEGORY, search)
+            url = '{}{}/?name={}'.format(BASEURL, CATEGORY.lowercase(), search)
             json_file = await _get_file(url)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
 
