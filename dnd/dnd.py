@@ -95,7 +95,7 @@ class DND:
                 await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=timeout, author=ctx.message.author)
                 if answer is not None:
-                    await self.bot.say('Process choice for choice: {}'.format(answercontent.lower().strip()))
+                    await self.bot.say('Process choice : {}'.format(answercontent.lower().strip()))
                 try:
                     await self.bot.clear_reactions(message)
                 except:
@@ -131,12 +131,11 @@ class DND:
                 await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 if answer is not None:
-                    await self.bot.say('Process choice for choice: {}'.format(answer.content.lower().strip())
+                    await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
                     # Write URL item processing function (CATEGORY, URL)
                 else:
                     try:
-                        return await\
-                            self.bot.delete_message(message)
+                        return await self.bot.delete_message(message)
                     except:
                         pass
 
