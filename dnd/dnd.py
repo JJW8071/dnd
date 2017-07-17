@@ -172,10 +172,16 @@ class DND:
             await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS:
-            em=discord.Embed(color=COLORS[category.lower()],title=json_file['name'],description='\n'.join(json_file['desc']))
-            if category is not None:
-                if category == 'spells':
-                    embed.add_field(name='spells',value='spells')
+            category=category.lower()
+            em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
+            if category == 'spells':
+                spell_schema=('higher_level','range','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses')
+                for s in spell_schema:
+                    s2=s.replace('_',' ')
+                    if json_file[s] is list:
+                        em.add_field(name=s2.title(),value='\n'.join(json_file[s]))
+                    else:
+                        em.add_field(name=s2.title(),value=json_file[s])
             await self.bot.say(embed=em)
 
 async def _get_file(url):
