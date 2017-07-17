@@ -133,7 +133,7 @@ class DND:
                     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
                     url = '{}{}/{}'.format(BASEURL,category,answer.content.lower().strip())
 
-                    await self._process_item(url, category=CATEGORY)
+                    await self._process_item(url, category)
                     # Write URL item processing function (CATEGORY, URL)
             else:
                 try:
