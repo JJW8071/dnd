@@ -24,7 +24,7 @@ COLORS = {
     # 'subclasses':discord.Color.(0xf29214),
     'features': discord.Color.orange(),
     # 'levels':discord.Color.(0xf29214),
-    'races': discord.Color.discord.Color.orange(),
+    'races': discord.Color.orange(),
     # 'subraces':discord.Color.discord.Color.(0xf29214),
     # 'traits':discord.Color.(0xf29214),
     # 'ability-scores': discord.Color.(0xf29214),
