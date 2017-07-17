@@ -180,11 +180,17 @@ class DND:
                     s2 = s.replace('_',' ')
                     if s in json_file:
                         if isinstance(json_file[s],list):
-                            em.add_field(name=s2,value='\n'.join(json_file[s]))
+                            try:
+                                em.add_field(name=s2,value='\n'.join(j['name'] for j in json_file[s]))
+                            except:
+                                em.add_field(name=s2,value='\n'.join(j for j in json_file[s]))
                         elif isinstance(json_file[s],str):
                             em.add_field(name=s2,value=json_file[s])
                         elif isinstance(json_file[s],tuple):
-                                em.add_field(name=s2,value='\n'.join(json_file[s]))
+                            try:
+                                em.add_field(name=s2,value='\n'.join(j['name'] for j in json_file[s]))
+                            except:
+                                em.add_field(name=s2,value='\n'.join(j for j in json_file[s]))
                         elif isinstance(json_file[s],dict):
                             em.add_field(name=s2,value=json_file[s]['name'])
                         elif isinstance(json_file[s],int):
