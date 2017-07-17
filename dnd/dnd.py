@@ -185,33 +185,28 @@ class DND:
         elif category.lower() in COLORS:
             category=category.lower()
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='\n'.join(json_file['desc']))
-            # for s in schema[category]:
-            keys = json_file.keys
-            for s in keys:
-                print(key)
-                if key not in {'_id','index','name'}:
+            keys = json_file.keys()
+            for key in keys:
+                if key not in {'_id','index','name','desc'}:
                     key2 = key.replace('_',' ')
-                    if key in json_file:
-                        if isinstance(json_file[key],list):
-                            try:
-                                em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-                            except:
-                                em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-                        elif isinstance(json_file[key],str):
-                            em.add_field(name=key2,value=json_file[key])
-                        elif isinstance(json_file[key],tuple):
-                            try:
-                                em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-                            except:
-                                em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-                        elif isinstance(json_file[key],dict):
-                            em.add_field(name=key2,value=json_file[key]['name'])
-                        elif isinstance(json_file[key],int):
-                            em.add_field(name=key2,value=json_file[key])
-                        else:
-                            em.add_field(name=key2,value='something else detected')
-
-
+                    if isinstance(json_file[key],list):
+                        try:
+                            em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+                        except:
+                            em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                    elif isinstance(json_file[key],tuple):
+                        try:
+                            em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+                        except:
+                            em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                    elif isinstance(json_file[key],dict):
+                        em.add_field(name=key2,value=json_file[key]['name'])
+                    elif isinstance(json_file[key],str):
+                        em.add_field(name=key2,value=json_file[key])
+                    elif isinstance(json_file[key],int):
+                        em.add_field(name=key2,value=json_file[key])
+                    else:
+                        em.add_field(name=key2,value='something else detected')
             await self.bot.say(embed=em)
 
 async def _get_file(url):
