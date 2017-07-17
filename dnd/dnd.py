@@ -179,11 +179,12 @@ class DND:
                 for s in spell_schema:
                     if s in json_file:
                         if json_file[s] is list:
-                            # s2=s.replace('_',' ')
+                            print('item list detected')
+                            s2 = s.replace('_',' ')
                             if 'name' in json_file[s][0]:
-                                em.add_field(name=s.title(),value='\n'.join(json_file[s][0]['name']))
+                                em.add_field(name=s2.title(),value='\n\n'.join(json_file[s][0]['name'].strip))
                             else:
-                                em.add_field(name=s.title(),value='\n'.join(json_file[s]))
+                                em.add_field(name=s2.title(),value='\n\n'.join(json_file[s].strip()))
                         else:
                             em.add_field(name=s.title(),value=json_file[s])
             await self.bot.say(embed=em)
