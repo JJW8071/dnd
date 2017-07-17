@@ -186,16 +186,15 @@ class DND:
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='')
             keys = json_file.keys()
             if 'desc' in keys:
-                em.add_field(name='Description',value='')
-                desc = chat.pagify('\n\n'.join(json_file['desc']),delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
-                if len(desc) > 1:
+                desc = '\n\n'.join(json_file['desc'])
+                pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
+                for page in pages:
+                    if page == pages[0]:
+                        em.set_description=page
+                    else:
+                        em=discord.Embed(color=COLORS[category],title='',description=page)
                     await self.bot.say(embed=em)
-                    for d in desc:
-                        em=discord.Embed(color=COLORS[category],title='',description=d)
-                        await self.bot.say(embed=em)
-                    em=discord.Embed(color=COLORS[category],title='',description='')
-                else:
-                    em.set_description=desc[0]
+                em=discord.Embed(color=COLORS[category],title='',description=page)
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
                     key2 = key.replace('_',' ').title()
