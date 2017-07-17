@@ -85,7 +85,7 @@ class DND:
             url = '{}{}'.format(BASEURL, CATEGORY)
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.bot.say('Press ⏺ to select:')
-            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category=CATEGORY)
+            await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif search is not None:
             if ' ' in search:
                 search = search.replace(' ', '+')
@@ -94,7 +94,7 @@ class DND:
             json_file = await _get_file(url)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
 
-    async def cogs_menu(self, ctx, cog_list: list, message: discord.Message=None, page=0, timeout: int=30, category=''):
+    async def cogs_menu(self, ctx, cog_list: list, category: str='', message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
         cog = cog_list[page]
@@ -164,9 +164,9 @@ class DND:
     async def _process_item(self, ctx='', url='', category=''):
         json_file = await _get_file(url)
         if 'count' in json_file:
-            menu_pages = await _present_list(self, url, CATEGORY)
+            menu_pages = await _present_list(self, url, category)
             await self.bot.say('Press ⏺ to select:')
-            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category)
+            await self.cogs_menu(ctx, menu_pages, message=None, page=0, timeout=30, category=category)
         embed=discord.embed(color=COLORS['category'],title=json_file['name'],description='\n'.join(json_file['desc'][0]))
         if category == 'spells':
             embed.add_field(name='spells',value='spells')
