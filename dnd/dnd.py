@@ -133,7 +133,7 @@ class DND:
                     await self.bot.say('Process choice : {}'.format(answer.content.lower().strip()))
                     url = '{}{}/{}'.format(BASEURL,category,answer.content.lower().strip())
 
-                    await self._process_item(url, category)
+                    await self._process_item(url=url, category=category)
                     # Write URL item processing function (CATEGORY, URL)
             else:
                 try:
@@ -141,7 +141,7 @@ class DND:
                 except:
                     pass
 
-    async def _process_item(url, category=''):
+    async def _process_item(self, url='', category=''):
         json_file = await _get_file(url)
         if category == 'spells':
             embed=discord.embed(color=discord.Color.purple(),title=json_file['name'],description='\n'.join(json_file['desc'][0]))
