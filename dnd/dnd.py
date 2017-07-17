@@ -194,8 +194,7 @@ class DND:
                     await self.bot.say(embed=em)
                     pages = chat.pagify(desc, delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
                     for page in pages:
-                        else:
-                            em=discord.Embed(color=COLORS[category],title='',description=page)
+                        em=discord.Embed(color=COLORS[category],title='',description=page)
                         await self.bot.say(embed=em)
                     em=discord.Embed(color=COLORS[category],title='',description=page)
             for key in keys:
