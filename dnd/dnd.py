@@ -187,7 +187,10 @@ class DND:
             em=discord.Embed(color=COLORS[category],title=json_file['name'],description='')
             keys = json_file.keys()
             if 'desc' in keys:
-                em.add_field(name='Description',value='\n\n'.join(json_file['desc']))
+                em.add_field(name='Description',value=''))
+                desc = chat.pagify('\n\n'.join(json_file['desk'])
+                for d in desc:
+                    em.add_field(name='',value=d, inline=False)
             for key in keys:
                 if key not in {'_id','index','name','desc'}:
                     key2 = key.replace('_',' ').title()
