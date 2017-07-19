@@ -294,7 +294,7 @@ class DND:
                     self.bot.delete_message(messages)
 
     async def _long_block(self, json_file, key, category):
-        desc = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=1500)
+        desc = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
         desc_pages = []
         embeds = []
         for page in desc:
