@@ -302,12 +302,12 @@ class DND:
         for page in desc_pages:
             if page == desc_pages[0]:
                 embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
-                await self.bot.say(embed=em)
+                # await self.bot.say(embed=em)
             # elif page == desc_pages[len(desc_pages)-1]:
             #     em=discord.Embed(color=COLORS[category],title='',description=page)
             else:
-                em=discord.Embed(color=COLORS[category],title='',description=page)
-                await self.bot.say(embed=em)
+                embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
+                # await self.bot.say(embed=em)
 
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
