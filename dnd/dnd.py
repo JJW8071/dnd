@@ -277,11 +277,11 @@ class DND:
             #         else:
             #             em.add_field(name=key2,value='something else detected')
             embeds.append(em)
-            # for key in ('desc', 'actions','legendary_actions'):
-            #     if key in keys:
-            #         long_embeds = await _long_block(json_file, key)
-            #         for embed in long_embeds:
-            #             embeds.append(embed)
+            for key in ('desc', 'actions','legendary_actions'):
+                if key in keys:
+                    long_embeds = await _long_block(json_file, key)
+                    for embed in long_embeds:
+                        embeds.append(embed)
             for em in embeds:
                 said = await self.bot.say(embed=em)
                 messages.append(said)
