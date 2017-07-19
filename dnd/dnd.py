@@ -279,7 +279,7 @@ class DND:
             embeds.append(em)
             for key in ('desc', 'actions','legendary_actions'):
                 if key in keys:
-                    long_embeds = await _long_block(json_file, key)
+                    long_embeds = await _long_block(json_file=json_file, key=key, category=category)
                     for embed in long_embeds:
                         embeds.append(embed)
             for em in embeds:
@@ -293,7 +293,7 @@ class DND:
                 for message in messages:
                     self.bot.delete_message(messages)
 
-async def _long_block(json_file, key):
+async def _long_block(json_file, key, category):
     desc = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=2000)
     desc_pages = []
     embeds = []
