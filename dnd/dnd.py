@@ -4,6 +4,9 @@ import json
 from __main__ import send_cmd_help
 from .utils import chat_formatting as chat
 from discord.ext import commands
+from bs4 import BeautifulSoup
+
+IMAGE_SEARCH = 'http://www.dnd.beyond.com/{}?filter-search={}'
 
 # numbs = {
 #     "rewind" : "⏪",
@@ -224,7 +227,6 @@ class DND:
                     url = '{}{}/{}'.format(BASEURL,category,answer.content.lower().strip())
 
                     await self._process_item(ctx, url=url, category=category)
-                    # Write URL item processing function (CATEGORY, URL)
             else:
                 try:
                     return await self.bot.delete_message(message)
@@ -238,37 +240,46 @@ class DND:
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS:
             category=category.lower()
-            keys = json_file.keys()
+            img_available = ['monsters', 'equipment',]
             embeds = []
-            messages = []
             em = discord.Embed(color=COLORS[category],title=json_file['name'],description='')
-            for key in keys:
-                if key not in {'_id','index','name','desc','actions','legendary_actions'}:
-                    key2 = key.replace('_',' ').title()
-                    if isinstance(json_file[key],list):
-                        try:
-                            em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-                        except:
-                            em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-                    elif isinstance(json_file[key],tuple):
-                        try:
-                            em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-                        except:
-                            em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-                    elif isinstance(json_file[key],dict):
-                        em.add_field(name=key2,value=json_file[key]['name'])
-                    elif isinstance(json_file[key],str):
-                        em.add_field(name=key2,value=json_file[key])
-                    elif isinstance(json_file[key],int):
-                        em.add_field(name=key2,value=json_file[key])
-                    else:
-                        em.add_field(name=key2,value='something else detected')
+            if category in img_available:
+                name = json_file['name']
+                if category == 'equipment':
+                    gettype = json_file['equipment_category']
+                else:
+                    gettype = json_file['type']
+                image = await self.image_search(category,name.lower(),gettype)
+                    em.set_image(url=image)
+            keys = json_file.keys()
+            messages = []
+            # for key in keys:
+            #     if key not in {'_id','index','name','desc','actions','legendary_actions'}:
+            #         key2 = key.replace('_',' ').title()
+            #         if isinstance(json_file[key],list):
+            #             try:
+            #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+            #             except:
+            #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+            #         elif isinstance(json_file[key],tuple):
+            #             try:
+            #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+            #             except:
+            #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+            #         elif isinstance(json_file[key],dict):
+            #             em.add_field(name=key2,value=json_file[key]['name'])
+            #         elif isinstance(json_file[key],str):
+            #             em.add_field(name=key2,value=json_file[key])
+            #         elif isinstance(json_file[key],int):
+            #             em.add_field(name=key2,value=json_file[key])
+            #         else:
+            #             em.add_field(name=key2,value='something else detected')
             embeds.append(em)
-            for key in ('desc', 'actions','legendary_actions'):
-                if key in keys:
-                    long_embeds = await _long_block(json_file, key)
-                    for embed in long_embeds:
-                        embeds.append(embed)
+            # for key in ('desc', 'actions','legendary_actions'):
+            #     if key in keys:
+            #         long_embeds = await _long_block(json_file, key)
+            #         for embed in long_embeds:
+            #             embeds.append(embed)
             for em in embeds:
                 said = await self.bot.say(embed=em)
                 messages.append(said)
@@ -323,6 +334,23 @@ async def _present_list(self, url, category):
 
         return menu_pages
 
+async def image_search(self,category,name,gettype):
+    plus_name = name.replace(' ','+')
+    url = IMAGE_SEARCH.format(category,plus_name)
+    try:
+        async with aiohttp.get(url) as response:
+            soupObject = BeautifulSoup(await response.text(), "html.parser")
+        image_url = soupObject.find(class_='monster-icon').find('a').get('href')
+        return image_url
+    except:
+        type_dash = gettype.replace(' ','-')
+        url_2 = 'https://static-waterdeep.cursecdn.com/1-0-6409-23253/Skins/Waterdeep/images/icons/{}/{}.jpg'
+        try:
+            async with aiohttp.get(url_2.format(category,gettype)) as response:
+                image_url = await response.text()
+                return image_url
+        except:
+            return 'https://static-waterdeep.cursecdn.com/1-0-6409-23253/Skins/Waterdeep/images/dnd-beyond-logo.svg'
 
 def setup(bot):
     bot.add_cog(DND(bot))
