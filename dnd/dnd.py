@@ -15,12 +15,69 @@ numbs = {
 }
 
 # schema=(
-#     'spells':{'higher_level','range','components','material','ritual','duration','concentration','casting_time', 'level', 'school','classes','subclasses','url'},
-#     'equipment':{'equipment_category','weapon_category','weapon_range','category_range','cost',},
-#     'monsters':{},
-#     'classes':{},
-#     'features':{'level','class'},
-#     'races':{},
+#         'spells':(
+#             'name',
+#             'level',
+#             'casting_time',
+#             'range',
+#             'components',
+#             'duration',
+#             'school',
+#             'desc',
+#             'higher_level',
+#             'material',
+#             'ritual',
+#             'concentration',
+#             'classes',
+#             'subclasses',
+#             'phb',),
+#     'equipment':(
+#             'name',
+#             'cost',
+#             'damage',
+#             'weight',
+#             'properties',),
+#             'desc',
+#             'type',
+#             'subtype',
+#             'weapon_range'
+#             'weapon_category',
+#     'monsters':(
+#         'name',
+#         'size',
+#         'type',
+#         'subtype',
+#         'allignment',
+#         'armor_class',
+#         'hit_points',
+#         'hit_dice',
+#         'speed',
+#         'strength',
+#         'dexterity',
+#         'constitution',
+#         'intelligence',
+#         'wisdom',
+#         'charisma',
+#         'dexterity_save',
+#         'constitution_save',
+#         'wisdom_save',
+#         'charisma_save',
+#         'perception',
+#         'stealth',
+#         'damage_vulnerabilities',
+#         'damage_resistances',
+#         'damage_immunities',
+#         'condition_immunities',
+#         'senses',
+#         'languages',
+#         'challenge_rating',
+#         'special_abilities',
+#         'actions',
+#         'legendary_actions',
+#         ),
+#     'classes':(),
+#     'features':('level','class'),
+#     'races':(),
 #     )
 
 
@@ -142,25 +199,24 @@ class DND:
                 pass
             return None
         elif react is not None:
-            reacts = {v: k for k, v in numbs.items()}
-            react = reacts[react.reaction.emoji]
-            if react == "next":
+            react = react.reaction.emoji
+            if react == "➡": #next_page
                 next_page = (page + 1) % len(cog_list)
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
-            elif react == "back":
+            elif react == "⬅": #previous_page
                 next_page = (page - 1) % len(cog_list)
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                             page=next_page, timeout=timeout)
-            elif react == "rewind":
+            elif react == "⏪": #rewind
                 next_page = (page - 5) % len(cog_list)
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
-            elif react == "fast_forward":
+            elif react == "⏩": # fast_forward
                 next_page = (page + 5) % len(cog_list)
                 return await self.cogs_menu(ctx, cog_list, message=message,
                                                 page=next_page, timeout=timeout)
-            elif react == "choose":
+            elif react == "⏺": #choose
                 await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                 if answer is not None:
@@ -179,13 +235,12 @@ class DND:
         json_file = await _get_file(url)
         if 'count' in json_file:
             menu_pages = await _present_list(self, url, CATEGORY)
-            await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS:
             category=category.lower()
             keys = json_file.keys()
             if 'desc' in keys:
-                desc = chat.pagify('\n'.join(json_file['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
+                desc = chat.pagify('\n'.join(json_file['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=2000)
                 desc_pages = []
                 for page in desc:
                     desc_pages.append(page)
@@ -244,7 +299,8 @@ async def _present_list(self, url, category):
 
         for page in pages:
             em=discord.Embed(color=discord.Color.red(), title=category, description=chat.box(page))
-            em.set_footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
+            em.add_field(name='Press ⏺ to select')
+            em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
             menu_pages.append(em)
 
         return menu_pages
