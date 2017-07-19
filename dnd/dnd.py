@@ -242,7 +242,7 @@ class DND:
             keys = json_file.keys()
             embeds = []
             messages = []
-            em=discord.Embed(color=COLORS[category],title='',description='')
+            em = discord.Embed(color=COLORS[category],title='',description='')
             for key in keys:
                 if key not in {'_id','index','name','desc','actions','legendary_actions'}:
                     key2 = key.replace('_',' ').title()
@@ -270,7 +270,6 @@ class DND:
                     long_embeds = await _long_block(json_file, key)
                     for embed in long_embeds:
                         embeds.append(embed)
-
             for em in embeds:
                 messages.append(await self.bot.say(embed=em))
             await self.bot.add_reaction(messages(len(messages)-1), "❌")
