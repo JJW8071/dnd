@@ -235,10 +235,10 @@ class DND:
 
     async def _process_item(self, ctx=None, url=None, category=None):
         json_file = await _get_file(url)
-        if 'count' in json_file:
+        if 'count' in json_file: # Present list
             menu_pages = await _present_list(self, url, CATEGORY)
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
-        elif category.lower() in COLORS:
+        elif category.lower() in COLORS: #process endpoint
             category=category.lower()
             img_available = ['monsters', 'equipment',]
             embeds = []
@@ -249,8 +249,7 @@ class DND:
                     gettype = json_file['equipment_category']
                 else:
                     gettype = json_file['type']
-                image = await self.image_search(category,name.lower(),gettype)
-                    em.set_image(url=image)
+                em.set_image(url=await self.image_search(category,name.lower(),gettype))
             keys = json_file.keys()
             messages = []
             # for key in keys:
