@@ -317,7 +317,7 @@ async def _present_list(self, url, category):
 
         for page in pages:
             em=discord.Embed(color=discord.Color.red(), title=category, description=chat.box(page))
-            em.add_field(name='Press ⏺ to select')
+            em.add_field(name='',value='Press ⏺ to select')
             em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
             menu_pages.append(em)
 
