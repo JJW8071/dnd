@@ -281,7 +281,7 @@ class DND:
                 if key in keys:
                     long_embeds = await self._long_block(json_file=json_file, key=key, category=category)
                     for embed in long_embeds:
-                        embeds.append(embed)
+                        embeds.append(discord.Embed(embed))
             for em in embeds:
                 said = await self.bot.say(embed=em)
                 messages.append(said)
