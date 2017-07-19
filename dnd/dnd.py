@@ -5,80 +5,80 @@ from __main__ import send_cmd_help
 from .utils import chat_formatting as chat
 from discord.ext import commands
 
-numbs = {
-    "rewind" : "⏪",
-    "next": "➡",
-    "back": "⬅",
-    "choose": "⏺",
-    "fast_forward": "⏩",
-    "exit": "❌",
-}
+# numbs = {
+#     "rewind" : "⏪",
+#     "next": "➡",
+#     "back": "⬅",
+#     "choose": "⏺",
+#     "fast_forward": "⏩",
+#     "exit": "❌",
+# }
 
-# schema=(
-#         'spells':(
-#             'name',
-#             'level',
-#             'casting_time',
-#             'range',
-#             'components',
-#             'duration',
-#             'school',
-#             'desc',
-#             'higher_level',
-#             'material',
-#             'ritual',
-#             'concentration',
-#             'classes',
-#             'subclasses',
-#             'phb',),
-#     'equipment':(
-#             'name',
-#             'cost',
-#             'damage',
-#             'weight',
-#             'properties',),
-#             'desc',
-#             'type',
-#             'subtype',
-#             'weapon_range'
-#             'weapon_category',
-#     'monsters':(
-#         'name',
-#         'size',
-#         'type',
-#         'subtype',
-#         'allignment',
-#         'armor_class',
-#         'hit_points',
-#         'hit_dice',
-#         'speed',
-#         'strength',
-#         'dexterity',
-#         'constitution',
-#         'intelligence',
-#         'wisdom',
-#         'charisma',
-#         'dexterity_save',
-#         'constitution_save',
-#         'wisdom_save',
-#         'charisma_save',
-#         'perception',
-#         'stealth',
-#         'damage_vulnerabilities',
-#         'damage_resistances',
-#         'damage_immunities',
-#         'condition_immunities',
-#         'senses',
-#         'languages',
-#         'challenge_rating',
-#         'special_abilities',
-#         'actions',
-#         'legendary_actions',
-#         ),
-#     'classes':(),
-#     'features':('level','class'),
-#     'races':(),
-#     )
+schema=(
+        'spells':(
+            'name',
+            'level',
+            'casting_time',
+            'range',
+            'components',
+            'duration',
+            'school',
+            'desc',
+            'higher_level',
+            'material',
+            'ritual',
+            'concentration',
+            'classes',
+            'subclasses',
+            'phb',),
+    'equipment':(
+            'name',
+            'cost',
+            'damage',
+            'weight',
+            'properties',),
+            'desc',
+            'type',
+            'subtype',
+            'weapon_range'
+            'weapon_category',
+    'monsters':(
+        'name',
+        'size',
+        'type',
+        'subtype',
+        'allignment',
+        'strength',
+        'dexterity',
+        'constitution',
+        'intelligence',
+        'wisdom',
+        'charisma',
+        'challenge_rating',
+        'armor_class',
+        'hit_points',
+        'hit_dice',
+        'speed',
+        'dexterity_save',
+        'constitution_save',
+        'wisdom_save',
+        'charisma_save',
+        'perception',
+        'stealth',
+        'damage_vulnerabilities',
+        'damage_resistances',
+        'damage_immunities',
+        'condition_immunities',
+        'senses',
+        'languages',
+        'special_abilities',
+        'actions',
+        'legendary_actions',
+        ),
+    'classes':(),
+    'features':('level','class'),
+    'races':(),
+    )
 
 
 
@@ -232,6 +232,7 @@ class DND:
                     pass
 
     async def _process_item(self, ctx=None, url=None, category=None):
+        messages = []
         json_file = await _get_file(url)
         if 'count' in json_file:
             menu_pages = await _present_list(self, url, CATEGORY)
@@ -239,23 +240,11 @@ class DND:
         elif category.lower() in COLORS:
             category=category.lower()
             keys = json_file.keys()
-            if 'desc' in keys:
-                desc = chat.pagify('\n'.join(json_file['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=2000)
-                desc_pages = []
-                for page in desc:
-                    desc_pages.append(page)
-                for page in desc_pages:
-                    if page == desc_pages[0]:
-                        em=discord.Embed(color=COLORS[category],title=json_file['name'],description=page)
-                        await self.bot.say(embed=em)
-                    elif page == desc_pages[len(desc_pages)-1]:
-                        em=discord.Embed(color=COLORS[category],title='',description=page)
-                    else:
-                        em=discord.Embed(color=COLORS[category],title='',description=page)
-                        await self.bot.say(embed=em)
-                # em=discord.Embed(color=COLORS[category],title='',description='')
+            embeds = []
+            messages = []
+            em=discord.Embed(color=COLORS[category],title='',description='')
             for key in keys:
-                if key not in {'_id','index','name','desc'}:
+                if key not in {'_id','index','name','desc','actions','legendary_actions'}:
                     key2 = key.replace('_',' ').title()
                     if isinstance(json_file[key],list):
                         try:
@@ -275,6 +264,35 @@ class DND:
                         em.add_field(name=key2,value=json_file[key])
                     else:
                         em.add_field(name=key2,value='something else detected')
+            embeds.append(em)
+            for key in ('desc', 'actions','legendary_actions'):
+                if key in keys:
+                    long_embeds = await _long_block(json_file, key)
+                    for embed in long_embeds:
+                        embeds.append(embed)
+
+            for em in embeds:
+                messages.append(await self.bot.say(embed=em))
+            await self.bot.add_reaction(messages(len(messages)-1), "❌")
+            react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
+            if react == '❌':
+                for message in messages:
+                    self.bot.delete_message(messages)
+
+async def _long_block(json_file, key):
+    desc = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=2000)
+    desc_pages = []
+    embeds = []
+    for page in desc:
+        desc_pages.append(page)
+    for page in desc_pages:
+        if page == desc_pages[0]:
+            embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
+            await self.bot.say(embed=em)
+        # elif page == desc_pages[len(desc_pages)-1]:
+        #     em=discord.Embed(color=COLORS[category],title='',description=page)
+        else:
+            em=discord.Embed(color=COLORS[category],title='',description=page)
             await self.bot.say(embed=em)
 
 async def _get_file(url):
