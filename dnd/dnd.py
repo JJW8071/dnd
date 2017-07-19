@@ -232,7 +232,6 @@ class DND:
                     pass
 
     async def _process_item(self, ctx=None, url=None, category=None):
-        messages = []
         json_file = await _get_file(url)
         if 'count' in json_file:
             menu_pages = await _present_list(self, url, CATEGORY)
@@ -242,7 +241,7 @@ class DND:
             keys = json_file.keys()
             embeds = []
             messages = []
-            em = discord.Embed(color=COLORS[category],title='',description='')
+            em = discord.Embed(color=COLORS[category],title=json_file['name'],description='')
             for key in keys:
                 if key not in {'_id','index','name','desc','actions','legendary_actions'}:
                     key2 = key.replace('_',' ').title()
@@ -271,8 +270,10 @@ class DND:
                     for embed in long_embeds:
                         embeds.append(embed)
             for em in embeds:
-                messages.append(await self.bot.say(embed=em))
-            await self.bot.add_reaction(messages(len(messages)-1), "❌")
+                said = await self.bot.say(embed=em)
+                messages.append(said)
+            last = len(messages)-1
+            await self.bot.add_reaction(messages(last), "❌")
             react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
             if react == '❌':
                 for message in messages:
