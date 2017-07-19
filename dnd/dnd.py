@@ -1,10 +1,11 @@
 import discord
 import aiohttp
 import json
+import bs4
+from bs4 import BeautifulSoup
 from __main__ import send_cmd_help
 from .utils import chat_formatting as chat
 from discord.ext import commands
-from bs4 import BeautifulSoup
 
 IMAGE_SEARCH = 'http://www.dnd.beyond.com/{}?filter-search={}'
 
