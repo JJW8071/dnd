@@ -307,6 +307,7 @@ class DND:
             #     em=discord.Embed(color=COLORS[category],title='',description=page)
             else:
                 embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
+        return embeds
                 # await self.bot.say(embed=em)
 
 async def _get_file(url):
