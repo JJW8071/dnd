@@ -153,8 +153,9 @@ class DND:
     async def _process_category(self, ctx, search=None, CATEGORY=None):
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
+            print(url)
             menu_pages = await _present_list(self, url, CATEGORY)
-            await self.bot.say('Press ⏺ to select:')
+            # await self.bot.say('Press ⏺ to select:')
             await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY.lower(),search)
@@ -172,6 +173,7 @@ class DND:
     async def cogs_menu(self, ctx, cog_list: list, category: str='', message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
+        print('list len = {}'.format(len(cog_list)))
         cog = cog_list[page]
         if not message:
             message =\
@@ -322,16 +324,13 @@ async def _present_list(self, url, category):
         for i in range(0,int(json_file['count'])):
             c = i+1
             package.append('{} {}'.format(c, json_file['results'][i]['name']))
-
         pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
         menu_pages = []
-
         for page in pages:
             em=discord.Embed(color=discord.Color.red(), title=category, description=chat.box(page))
             em.add_field(name='',value='Press ⏺ to select')
             em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
             menu_pages.append(em)
-
         return menu_pages
 
 async def image_search(self,category,name,gettype):
