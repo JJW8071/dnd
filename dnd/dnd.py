@@ -252,28 +252,28 @@ class DND:
                 said = await self.bot.say(embed=em)
                 messages.append(said)
 
-                # for key in keys:
-                #     if key not in {'_id','index','name','desc','actions','legendary_actions'}:
-                #         key2 = key.replace('_',' ').title()
-                #         if isinstance(json_file[key],list):
-                #             try:
-                #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-                #             except:
-                #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-                #         elif isinstance(json_file[key],tuple):
-                #             try:
-                #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-                #             except:
-                #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-                #         elif isinstance(json_file[key],dict):
-                #             em.add_field(name=key2,value=json_file[key]['name'])
-                #         elif isinstance(json_file[key],str):
-                #             em.add_field(name=key2,value=json_file[key])
-                #         elif isinstance(json_file[key],int):
-                #             em.add_field(name=key2,value=json_file[key])
-                #         else:
-                #             em.add_field(name=key2,value='something else detected')
-                # embeds.append(em)
+                for key in keys:
+                    if key not in {'_id','index','name','desc','actions','legendary_actions'}:
+                        key2 = key.replace('_',' ').title()
+                        if isinstance(json_file[key],list):
+                            try:
+                                em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+                            except:
+                                em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                        elif isinstance(json_file[key],tuple):
+                            try:
+                                em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+                            except:
+                                em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                        elif isinstance(json_file[key],dict):
+                            em.add_field(name=key2,value=json_file[key]['name'])
+                        elif isinstance(json_file[key],str):
+                            em.add_field(name=key2,value=json_file[key])
+                        elif isinstance(json_file[key],int):
+                            em.add_field(name=key2,value=json_file[key])
+                        else:
+                            em.add_field(name=key2,value='something else detected')
+                embeds.append(em)
                 # for key in ('desc', 'actions','legendary_actions'):
                 #     if key in keys:
                 #         desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
@@ -285,18 +285,18 @@ class DND:
                 #             em = discord.Embed(color=COLORS[category],title='',description=page))
                 #             embeds.append(em)
 
-                # for em in embeds:
-                #     said = await self.bot.say(embed=em)
-                #     messages.append(said)
-                # last = len(messages)-1
-                # print(last)
-                # await self.bot.add_reaction(messages[last], "❌")
-                # react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
-                # if react == '❌':
-                #     try:
-                #         return await self.bot.delete_message(message)
-                #     except:
-                #         pass
+                for em in embeds:
+                    said = await self.bot.say(embed=em)
+                    messages.append(said)
+                last = len(messages)-1
+                print(last)
+                await self.bot.add_reaction(messages[last], "❌")
+                react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
+                if react == '❌':
+                    try:
+                        return await self.bot.delete_message(message)
+                    except:
+                        pass
 
 
     async def _present_list(self, url, category):
