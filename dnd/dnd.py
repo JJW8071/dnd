@@ -269,11 +269,15 @@ class DND:
             #         else:
             #             em.add_field(name=key2,value='something else detected')
             embeds.append(em)
-            # for key in ('desc', 'actions','legendary_actions'):
-            #     if key in keys:
-            #         long_embeds = await self._long_block(json_file=json_file, key=key, category=category)
-            #         for embed in long_embeds:
-            #             embeds.append(discord.Embed(embed))
+            for key in ('desc', 'actions','legendary_actions'):
+                if key in keys:
+                    desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
+                    for page in desc_pages:
+                        if page == desc_pages[0]:
+                            embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
+                        else:
+                            embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
+
             for em in embeds:
                 said = await self.bot.say(embed=em)
                 messages.append(said)
@@ -287,21 +291,21 @@ class DND:
                 except:
                     pass
 
-    async def _long_block(self, json_file, key, category):
-        desc = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
-        desc_pages = []
-        embeds = []
-        for page in desc:
-            desc_pages.append(page)
-        for page in desc_pages:
-            if page == desc_pages[0]:
-                embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
-                # await self.bot.say(embed=em)
-            # elif page == desc_pages[len(desc_pages)-1]:
-            #     em=discord.Embed(color=COLORS[category],title='',description=page)
-            else:
-                embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
-        return embeds
+    # async def _long_block(self, json_file, key, category):
+    #     desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
+    #     # desc_pages = []
+    #     embeds = []
+    #     for page in desc:
+    #         desc_pages.append(page)
+    #     for page in desc_pages:
+    #         if page == desc_pages[0]:
+    #             embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
+    #             # await self.bot.say(embed=em)
+    #         # elif page == desc_pages[len(desc_pages)-1]:
+    #         #     em=discord.Embed(color=COLORS[category],title='',description=page)
+    #         else:
+    #             embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
+    #     return embeds
                 # await self.bot.say(embed=em)
 
 async def _get_file(url):
