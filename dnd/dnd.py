@@ -291,7 +291,7 @@ class DND:
                                     em = discord.Embed(color=COLORS[category],title='',description=page)
                                     embeds.append(em)
                                 i+=1
-                        elif isinstance(json_file[key],dict)
+                        elif isinstance(json_file[key],dict):
                             desc_pages = chat.pagify('\n'.join(json_file[key]['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
                             embed_list = []
                             i = 0
