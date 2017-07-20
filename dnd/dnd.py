@@ -1,4 +1,4 @@
-embed_listimport discord
+import discord
 import aiohttp
 import json
 import bs4
@@ -8,15 +8,6 @@ from .utils import chat_formatting as chat
 from discord.ext import commands
 
 IMAGE_SEARCH = 'http://www.dnd.beyond.com/{}?filter-search={}'
-
-# numbs = {
-#     "rewind" : "⏪",
-#     "next": "➡",
-#     "back": "⬅",
-#     "choose": "⏺",
-#     "fast_forward": "⏩",
-#     "exit": "❌",
-# }
 
 # schema=(
 #         'spells':(
@@ -83,8 +74,6 @@ IMAGE_SEARCH = 'http://www.dnd.beyond.com/{}?filter-search={}'
 #     'features':('level','class'),
 #     'races':(),
 #     )
-
-
 
 COLORS = {
     'spells' : discord.Color.purple(),
