@@ -154,7 +154,7 @@ class DND:
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             print(url)
-            menu_pages = await self._present_list(url, CATEGORY)
+            menu_pages = await self._present_list(url, CATEGORY.lower())
             # await self.bot.say('Press ⏺ to select:')
             await self.pages_menu(ctx, embed_list=menu_pages, category=CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
