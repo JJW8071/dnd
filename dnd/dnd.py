@@ -313,7 +313,9 @@ class DND:
     async def _present_list(self, url, category):
         print(url)
         json_file = await _get_file(url)
-        if json_file is not None:
+        if 'count' in json_file:
+            print('_present_list found another list')
+        elif json_file is not None:
             results = json_file['results']
             package = []
             for i in range(0,int(json_file['count'])):
@@ -328,7 +330,7 @@ class DND:
                 menu_pages.append(em)
             return menu_pages
         else:
-            await self.bot.say('json_file returned empty')
+            print('json_file returned empty')
             return None
 
 async def _get_file(url):
