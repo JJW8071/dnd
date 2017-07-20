@@ -292,7 +292,7 @@ class DND:
                 last = len(messages)-1
                 print(last)
                 await self.bot.add_reaction(messages[last], "❌")
-                react = await self.bot.wait_for_reaction(message=message[last], user=ctx.message.author, timeout=timeout, emoji=["❌"])
+                react = await self.bot.wait_for_reaction(message=messages[last], user=ctx.message.author, timeout=timeout, emoji=["❌"])
                 if react == '❌':
                     try:
                         return await self.bot.delete_message(message)
