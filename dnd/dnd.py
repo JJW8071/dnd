@@ -272,10 +272,11 @@ class DND:
             for key in ('desc', 'actions','legendary_actions'):
                 if key in keys:
                     desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
+                    embed_list = []
                     for page in desc_pages:
-                        if page == desc_pages[0]:
-                            embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
-                        else:
+                        # if page == desc_pages[0]:
+                        #     embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
+                        # else:
                             embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
 
             for em in embeds:
