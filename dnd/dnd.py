@@ -322,7 +322,7 @@ class DND:
             for r in results:
                 name = r['name']
                 link = r['url']
-                link = link.replace('{}/'.format(url),'')
+                link = link.replace(url,'')
                 package.append('{} {}'.format(link, name))
             pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
             menu_pages = []
