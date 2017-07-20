@@ -159,7 +159,8 @@ class DND:
             await self.pages_menu(ctx, embed_list=menu_pages, category=CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY.lower(),search)
-            await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
+            print(url)
+            # await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
             await self._process_item(ctx=ctx,url=url,category=CATEGORY)
             # except:
         else:
@@ -167,6 +168,7 @@ class DND:
                 search = search.replace(' ', '+')
             search = search.replace(' ','+')
             url = '{}{}/?name={}'.format(BASEURL, CATEGORY.lower(), search)
+            print(url)
             json_file = await _get_file(url)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
 
@@ -229,90 +231,78 @@ class DND:
                     pass
 
     async def _process_item(self, ctx=None, url=None, category=None):
+        print('process_item')
         json_file = await _get_file(url)
-        keys = json_file.keys()
-        messages = []
-        if 'count' in json_file: # Present list
-            menu_pages = await _present_list(self, url, CATEGORY)
-            await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
-        elif category.lower() in COLORS: #process endpoint
-            category=category.lower()
-            img_available = ['monsters', 'equipment',]
-            embeds = []
-            em = discord.Embed(color=COLORS[category],title=json_file['name'])
-            if category in img_available:
-                name = json_file['name']
-                if category == 'equipment':
-                    gettype = json_file['equipment_category']
-                else:
-                    gettype = json_file['type']
-                    em.set_image(url=await self.image_search(category,name.lower(),gettype))
-            ##
-            said = await self.bot.say(embed=em)
-            messages.append(said)
+        if 'count' in json_file:
+            await self._process_category(ctx=ctx, url=url, category=category)
+        else:
+            keys = json_file.keys()
+            messages = []
+            if 'count' in json_file: # Present list
+                menu_pages = await _present_list(self, url, CATEGORY)
+                await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
+            elif category.lower() in COLORS: #process endpoint
+                category=category.lower()
+                img_available = ['monsters', 'equipment',]
+                embeds = []
+                em = discord.Embed(color=COLORS[category],title=json_file['name'])
+                if category in img_available:
+                    name = json_file['name']
+                    if category == 'equipment':
+                        gettype = json_file['equipment_category']
+                    else:
+                        gettype = json_file['type']
+                        em.set_image(url=await self.image_search(category,name.lower(),gettype))
+                ##
+                said = await self.bot.say(embed=em)
+                messages.append(said)
 
-            # for key in keys:
-            #     if key not in {'_id','index','name','desc','actions','legendary_actions'}:
-            #         key2 = key.replace('_',' ').title()
-            #         if isinstance(json_file[key],list):
-            #             try:
-            #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-            #             except:
-            #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-            #         elif isinstance(json_file[key],tuple):
-            #             try:
-            #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
-            #             except:
-            #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
-            #         elif isinstance(json_file[key],dict):
-            #             em.add_field(name=key2,value=json_file[key]['name'])
-            #         elif isinstance(json_file[key],str):
-            #             em.add_field(name=key2,value=json_file[key])
-            #         elif isinstance(json_file[key],int):
-            #             em.add_field(name=key2,value=json_file[key])
-            #         else:
-            #             em.add_field(name=key2,value='something else detected')
-            # embeds.append(em)
-            # for key in ('desc', 'actions','legendary_actions'):
-            #     if key in keys:
-            #         desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
-            #         embed_list = []
-            #         for page in desc_pages:
-            #             # if page == desc_pages[0]:
-            #             #     embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
-            #             # else:
-            #             em = discord.Embed(color=COLORS[category],title='',description=page))
-            #             embeds.append(em)
+                # for key in keys:
+                #     if key not in {'_id','index','name','desc','actions','legendary_actions'}:
+                #         key2 = key.replace('_',' ').title()
+                #         if isinstance(json_file[key],list):
+                #             try:
+                #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+                #             except:
+                #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                #         elif isinstance(json_file[key],tuple):
+                #             try:
+                #                 em.add_field(name=key2,value='\n'.join(j['name'] for j in json_file[key]))
+                #             except:
+                #                 em.add_field(name=key2,value='\n'.join(j for j in json_file[key]))
+                #         elif isinstance(json_file[key],dict):
+                #             em.add_field(name=key2,value=json_file[key]['name'])
+                #         elif isinstance(json_file[key],str):
+                #             em.add_field(name=key2,value=json_file[key])
+                #         elif isinstance(json_file[key],int):
+                #             em.add_field(name=key2,value=json_file[key])
+                #         else:
+                #             em.add_field(name=key2,value='something else detected')
+                # embeds.append(em)
+                # for key in ('desc', 'actions','legendary_actions'):
+                #     if key in keys:
+                #         desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
+                #         embed_list = []
+                #         for page in desc_pages:
+                #             # if page == desc_pages[0]:
+                #             #     embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
+                #             # else:
+                #             em = discord.Embed(color=COLORS[category],title='',description=page))
+                #             embeds.append(em)
 
-            # for em in embeds:
-            #     said = await self.bot.say(embed=em)
-            #     messages.append(said)
-            # last = len(messages)-1
-            # print(last)
-            # await self.bot.add_reaction(messages[last], "❌")
-            # react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
-            # if react == '❌':
-            #     try:
-            #         return await self.bot.delete_message(message)
-            #     except:
-            #         pass
+                # for em in embeds:
+                #     said = await self.bot.say(embed=em)
+                #     messages.append(said)
+                # last = len(messages)-1
+                # print(last)
+                # await self.bot.add_reaction(messages[last], "❌")
+                # react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
+                # if react == '❌':
+                #     try:
+                #         return await self.bot.delete_message(message)
+                #     except:
+                #         pass
 
-    # async def _long_block(self, json_file, key, category):
-    #     desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
-    #     # desc_pages = []
-    #     embeds = []
-    #     for page in desc:
-    #         desc_pages.append(page)
-    #     for page in desc_pages:
-    #         if page == desc_pages[0]:
-    #             embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
-    #             # await self.bot.say(embed=em)
-    #         # elif page == desc_pages[len(desc_pages)-1]:
-    #         #     em=discord.Embed(color=COLORS[category],title='',description=page)
-    #         else:
-    #             embeds.append(discord.Embed(color=COLORS[category],title='',description=page))
-    #     return embeds
-                # await self.bot.say(embed=em)
 
     async def _present_list(self, url, category):
         print(url)
