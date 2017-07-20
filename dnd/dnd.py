@@ -1,4 +1,4 @@
-import discord
+embed_listimport discord
 import aiohttp
 import json
 import bs4
@@ -211,14 +211,14 @@ class DND:
                 next_page = (page + 1) % len(embed_list)
                 return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
             elif react == "⬅": #previous_page
-                next_page = (page - 1) % len(cog_list)
-                return await self.pages_menu(ctx, cog_list, message=message, page=next_page, timeout=timeout)
+                next_page = (page - 1) % len(embed_list)
+                return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
             elif react == "⏪": #rewind
-                next_page = (page - 5) % len(cog_list)
-                return await self.pages_menu(ctx, cog_list, message=message, page=next_page, timeout=timeout)
+                next_page = (page - 5) % len(embed_list)
+                return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
             elif react == "⏩": # fast_forward
-                next_page = (page + 5) % len(cog_list)
-                return await self.pages_menu(ctx, cog_list, message=message, page=next_page, timeout=timeout)
+                next_page = (page + 5) % len(embed_list)
+                return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
             elif react == "⏺": #choose
                 await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
