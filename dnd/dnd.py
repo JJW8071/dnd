@@ -247,7 +247,10 @@ class DND:
                         gettype = json_file['equipment_category']
                     else:
                         gettype = json_file['type']
-                        em.set_image(url=await self.image_search(category,name.lower(),gettype))
+                        try:
+                            em.set_image(url=await self.image_search(category,name.lower(),gettype))
+                        except:
+                            print('cannot find image')
                 ##
                 said = await self.bot.say(embed=em)
                 messages.append(said)
@@ -291,7 +294,6 @@ class DND:
                     said = await self.bot.say(embed=em)
                     messages.append(said)
                 last = len(messages)-1
-                print(last)
                 await self.bot.add_reaction(messages[last], "❌")
                 react = await self.bot.wait_for_reaction(message=messages[last], user=ctx.message.author, timeout=30, emoji=["❌"])
                 if react == '❌':
