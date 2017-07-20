@@ -314,8 +314,8 @@ class DND:
         '''count = number of list items
         results = list of (name, url)'''
         print(url)
-        length = int(json_file['count'])-1
         json_file = await _get_file(url)
+        length = int(json_file['count'])-1
         if json_file is not None:
             results = json_file['results']
             package = []
