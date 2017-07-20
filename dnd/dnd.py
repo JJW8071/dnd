@@ -321,15 +321,14 @@ class DND:
             package = []
             for r in results:
                 name = r['name']
-                link = r['url']
-                link = link.replace(url,'')
+                link = r['url'].rsplit('/',1)
                 package.append('{} {}'.format(link, name))
             pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
             menu_pages = []
             for page in pages:
                 em=discord.Embed(color=COLORS[category.lower()], title=category.title(), description=chat.box(page))
                 # em.add_field(name='Press ⏺ to select',value='')
-                em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
+                em.set_footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
                 menu_pages.append(em)
             print(len(menu_pages))
             return menu_pages
