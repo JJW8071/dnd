@@ -311,23 +311,27 @@ class DND:
 
 
     async def _present_list(self, url, category):
+        '''count = number of list items
+        results = list of (name, url)'''
         print(url)
+        length = int(json_file['count'])-1
         json_file = await _get_file(url)
-        if 'count' in json_file:
-            print('_present_list found another list')
-        elif json_file is not None:
+        if json_file is not None:
             results = json_file['results']
             package = []
-            for i in range(0,int(json_file['count'])):
-                c = i+1
-                package.append('{} {}'.format(c, json_file['results'][i]['name']))
+                for r in results:
+                    name = results['name']
+                    link = results['url']
+                    link = link.replace('{}/'.format(url),'')
+                    package.append('{} {}'.format(link, name))
             pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
             menu_pages = []
             for page in pages:
-                em=discord.Embed(color=COLORS[category.lower()], title=category, description=chat.box(page))
+                em=discord.Embed(color=COLORS[category.lower()], title=category.title(), description=chat.box(page))
                 em.add_field(name='',value='Press ⏺ to select')
                 em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
                 menu_pages.append(em)
+            print(len(menu_pages))
             return menu_pages
         else:
             print('json_file returned empty')
