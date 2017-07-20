@@ -239,7 +239,7 @@ class DND:
             category=category.lower()
             img_available = ['monsters', 'equipment',]
             embeds = []
-            em = discord.Embed(color=COLORS[category],title=json_file['name'],description='')
+            em = discord.Embed(color=COLORS[category],title=json_file['name'])
             if category in img_available:
                 name = json_file['name']
                 if category == 'equipment':
