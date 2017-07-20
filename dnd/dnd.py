@@ -321,7 +321,7 @@ class DND:
             package = []
             for r in results:
                 name = r['name']
-                link = r['url'].rsplit('/',1)
+                link = r['url'].rsplit('/',1)[1]
                 package.append('{} {}'.format(link, name))
             pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
             menu_pages = []
