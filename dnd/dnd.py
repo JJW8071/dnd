@@ -176,7 +176,7 @@ class DND:
         print('list len = {}'.format(len(embed_list)))
         em = embed_list[page]
         if not message:
-            message = await self.bot.send_message(ctx.message.channel, embed=em)
+            message = await self.bot.say(embed=em)
             await self.bot.add_reaction(message, "⏪")
             await self.bot.add_reaction(message, "⬅")
             await self.bot.add_reaction(message,"⏺")
