@@ -155,8 +155,11 @@ class DND:
             url = '{}{}'.format(BASEURL, CATEGORY)
             print(url)
             menu_pages = await self._present_list(url, CATEGORY.lower())
+            if menu_pages is not None:
             # await self.bot.say('Press ⏺ to select:')
-            await self.pages_menu(ctx, embed_list=menu_pages, category=CATEGORY, message=None, page=0, timeout=30)
+                await self.pages_menu(ctx=ctx, embed_list=menu_pages, category=CATEGORY, message=None, page=0, timeout=30)
+            else:
+                print('error - no menu pages')
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY.lower(),search)
             print(url)
@@ -240,7 +243,10 @@ class DND:
             messages = []
             if 'count' in json_file: # Present list
                 menu_pages = await _present_list(self, url, CATEGORY)
-                await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
+                if menu_pages is not None:
+                    await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
+                else:
+                    print('menu_pages is None')
             elif category.lower() in COLORS: #process endpoint
                 category=category.lower()
                 img_available = ['monsters', 'equipment',]
@@ -322,8 +328,8 @@ class DND:
                 menu_pages.append(em)
             return menu_pages
         else:
-
             await self.bot.say('json_file returned empty')
+            return None
 
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
