@@ -154,9 +154,9 @@ class DND:
         if search is None:
             url = '{}{}'.format(BASEURL, CATEGORY)
             print(url)
-            menu_pages = await _present_list(self, url, CATEGORY)
+            menu_pages = await self._present_list(url, CATEGORY)
             # await self.bot.say('Press ⏺ to select:')
-            await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
+            await self.pages_menu(ctx, embed_list=menu_pages, category=CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY.lower(),search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
@@ -308,6 +308,23 @@ class DND:
     #     return embeds
                 # await self.bot.say(embed=em)
 
+    async def _present_list(self, url, category):
+        json_file = await _get_file(url)
+        if json_file is not None:
+            results = json_file['results']
+            package = []
+            for i in range(0,int(json_file['count'])):
+                c = i+1
+                package.append('{} {}'.format(c, json_file['results'][i]['name']))
+            pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
+            menu_pages = []
+            for page in pages:
+                em=discord.Embed(color=COLORS[category], title=category, description=chat.box(page))
+                em.add_field(name='',value='Press ⏺ to select')
+                em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
+                menu_pages.append(em)
+            return menu_pages
+
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
@@ -316,22 +333,6 @@ async def _get_file(url):
             if json_file is not None:
                 return json_file
 
-async def _present_list(self, url, category):
-    json_file = await _get_file(url)
-    if json_file is not None:
-        results = json_file['results']
-        package = []
-        for i in range(0,int(json_file['count'])):
-            c = i+1
-            package.append('{} {}'.format(c, json_file['results'][i]['name']))
-        pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
-        menu_pages = []
-        for page in pages:
-            em=discord.Embed(color=discord.Color.red(), title=category, description=chat.box(page))
-            em.add_field(name='',value='Press ⏺ to select')
-            em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
-            menu_pages.append(em)
-        return menu_pages
 
 async def image_search(self,category,name,gettype):
     plus_name = name.replace(' ','+')
