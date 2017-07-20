@@ -277,7 +277,7 @@ class DND:
                 # embeds.append(em)
                 for key in ('desc', 'actions','legendary_actions', 'higher_level'):
                     if key in keys:
-                        desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
+                        desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=2000)
                         embed_list = []
                         for page in desc_pages:
                             # if page == desc_pages[0]:
