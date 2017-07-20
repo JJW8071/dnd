@@ -156,7 +156,7 @@ class DND:
             print(url)
             menu_pages = await _present_list(self, url, CATEGORY)
             # await self.bot.say('Press ⏺ to select:')
-            await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
+            await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif search.isnumeric():
             url = '{}{}/{}'.format(BASEURL,CATEGORY.lower(),search)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, url))
@@ -170,13 +170,13 @@ class DND:
             json_file = await _get_file(url)
             await self.bot.say('{} search: <{}>'.format(CATEGORY, json_file['results'][0]['url']))
 
-    async def cogs_menu(self, ctx, embed_list: list, category: str='', message: discord.Message=None, page=0, timeout: int=30):
+    async def pages_menu(self, ctx, embed_list: list, category: str='', message: discord.Message=None, page=0, timeout: int=30):
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
-        print('list len = {}'.format(len(cog_list)))
+        print('list len = {}'.format(len(embed_list)))
         em = embed_list[page]
         if not message:
-            message = await self.bot.send_message(ctx.message.channel, embed=cog)
+            message = await self.bot.send_message(ctx.message.channel, embed=em)
             await self.bot.add_reaction(message, "⏪")
             await self.bot.add_reaction(message, "⬅")
             await self.bot.add_reaction(message,"⏺")
@@ -184,7 +184,7 @@ class DND:
             await self.bot.add_reaction(message, "➡")
             await self.bot.add_reaction(message, "⏩")
         else:
-            message = await self.bot.edit_message(message, embed=cog)
+            message = await self.bot.edit_message(message, embed=em)
         react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout,emoji=["➡", "⬅", "❌", "⏪", "⏩","⏺"])
         if react is None:
             try:
@@ -203,21 +203,17 @@ class DND:
         elif react is not None:
             react = react.reaction.emoji
             if react == "➡": #next_page
-                next_page = (page + 1) % len(cog_list)
-                return await self.cogs_menu(ctx, cog_list, message=message,
-                                            page=next_page, timeout=timeout)
+                next_page = (page + 1) % len(embed_list)
+                return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
             elif react == "⬅": #previous_page
                 next_page = (page - 1) % len(cog_list)
-                return await self.cogs_menu(ctx, cog_list, message=message,
-                                            page=next_page, timeout=timeout)
+                return await self.pages_menu(ctx, cog_list, message=message, page=next_page, timeout=timeout)
             elif react == "⏪": #rewind
                 next_page = (page - 5) % len(cog_list)
-                return await self.cogs_menu(ctx, cog_list, message=message,
-                                                page=next_page, timeout=timeout)
+                return await self.pages_menu(ctx, cog_list, message=message, page=next_page, timeout=timeout)
             elif react == "⏩": # fast_forward
                 next_page = (page + 5) % len(cog_list)
-                return await self.cogs_menu(ctx, cog_list, message=message,
-                                                page=next_page, timeout=timeout)
+                return await self.pages_menu(ctx, cog_list, message=message, page=next_page, timeout=timeout)
             elif react == "⏺": #choose
                 await self.bot.say(SELECTION.format(category+' '))
                 answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
@@ -236,7 +232,7 @@ class DND:
         json_file = await _get_file(url)
         if 'count' in json_file: # Present list
             menu_pages = await _present_list(self, url, CATEGORY)
-            await self.cogs_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
+            await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
         elif category.lower() in COLORS: #process endpoint
             category=category.lower()
             img_available = ['monsters', 'equipment',]
