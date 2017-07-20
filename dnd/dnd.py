@@ -280,16 +280,33 @@ class DND:
                 # embeds.append(em)
                 for key in ('desc', 'actions','legendary_actions', 'higher_level'):
                     if key in keys:
-                        desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=1980)
-                        embed_list = []
-                        i = 0
-                        for page in desc_pages:
-                            if i == 0:
-                                embeds.append(discord.Embed(color=COLORS[category],title=key.replace('_',' ').title(),description=page))
-                            else:
-                                em = discord.Embed(color=COLORS[category],title='',description=page)
-                                embeds.append(em)
-                            i+=1
+                        if isinstance(json_file[key], list):
+                            desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=1980)
+                            embed_list = []
+                            i = 0
+                            for page in desc_pages:
+                                if i == 0:
+                                    embeds.append(discord.Embed(color=COLORS[category],title=key.replace('_',' ').title(),description=page))
+                                else:
+                                    em = discord.Embed(color=COLORS[category],title='',description=page)
+                                    embeds.append(em)
+                                i+=1
+                        elif isinstance(json_file[key],dict)
+                            desc_pages = chat.pagify('\n'.join(json_file[key]['desc']), delims=['\n\n'], escape=True, shorten_by=8, page_length=1000)
+                            embed_list = []
+                            i = 0
+                            for page in desc_pages:
+                                if i == 0:
+                                    em = discord.Embed(color=COLORS[category],title=key.replace('_',' ').title(),description='')
+                                    keys2 = json_file[key].keys()
+                                    for k in keys2:
+                                        if k != 'desc':
+                                            em.add_field(name=k.replace('_',' ').title(),value=json_file[key][k2])
+                                    embeds.append(em)
+                                else:
+                                    em = discord.Embed(color=COLORS[category],title='',description=page)
+                                    embeds.append(em)
+                                i+=1
                 for em in embeds:
                     said = await self.bot.say(embed=em)
                     messages.append(said)
