@@ -279,12 +279,14 @@ class DND:
                     if key in keys:
                         desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=1980)
                         embed_list = []
+                        i = 0
                         for page in desc_pages:
-                            if page == desc_pages[0]:
+                            if i == 0:
                                 embeds.append(discord.Embed(color=COLORS[category],title=key.replace('_',' ').title(),description=page))
                             else:
                                 em = discord.Embed(color=COLORS[category],title='',description=page)
                                 embeds.append(em)
+                            i+=1
                 for em in embeds:
                     said = await self.bot.say(embed=em)
                     messages.append(said)
