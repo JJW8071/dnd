@@ -327,7 +327,7 @@ class DND:
             menu_pages = []
             for page in pages:
                 em=discord.Embed(color=COLORS[category.lower()], title=category.title(), description=chat.box(page))
-                # em.add_field(name='Press ⏺ to select',value='')
+                em.add_field(name='Press ⏺ to select',value='')
                 em.set_footer(text='From dnd5eapi.co',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
                 menu_pages.append(em)
             print(len(menu_pages))
