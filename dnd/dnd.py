@@ -283,7 +283,7 @@ class DND:
                             # if page == desc_pages[0]:
                             #     embeds.append(discord.Embed(color=COLORS[category],title=json_file['name'],description=page))
                             # else:
-                            em = discord.Embed(color=COLORS[category],title='',description=page))
+                            em = discord.Embed(color=COLORS[category],title='',description=page)
                             embeds.append(em)
 
                 for em in embeds:
