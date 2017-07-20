@@ -320,8 +320,8 @@ class DND:
             results = json_file['results']
             package = []
             for r in results:
-                name = results['name']
-                link = results['url']
+                name = r['name']
+                link = r['url']
                 link = link.replace('{}/'.format(url),'')
                 package.append('{} {}'.format(link, name))
             pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
