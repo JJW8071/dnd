@@ -230,6 +230,7 @@ class DND:
 
     async def _process_item(self, ctx=None, url=None, category=None):
         json_file = await _get_file(url)
+        keys = json_file.keys()
         messages = []
         if 'count' in json_file: # Present list
             menu_pages = await _present_list(self, url, CATEGORY)
@@ -249,7 +250,6 @@ class DND:
             ##
             said = await self.bot.say(embed=em)
             messages.append(said)
-            keys = json_file.keys()
 
             # for key in keys:
             #     if key not in {'_id','index','name','desc','actions','legendary_actions'}:
@@ -287,15 +287,15 @@ class DND:
             # for em in embeds:
             #     said = await self.bot.say(embed=em)
             #     messages.append(said)
-            last = len(messages)-1
-            print(last)
-            await self.bot.add_reaction(messages[last], "❌")
-            react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
-            if react == '❌':
-                try:
-                    return await self.bot.delete_message(message)
-                except:
-                    pass
+            # last = len(messages)-1
+            # print(last)
+            # await self.bot.add_reaction(messages[last], "❌")
+            # react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout, emoji=["❌"])
+            # if react == '❌':
+            #     try:
+            #         return await self.bot.delete_message(message)
+            #     except:
+            #         pass
 
     # async def _long_block(self, json_file, key, category):
     #     desc_pages = chat.pagify('\n'.join(json_file[key]), delims=['\n\n'], escape=True, shorten_by=8, page_length=500)
@@ -315,6 +315,7 @@ class DND:
                 # await self.bot.say(embed=em)
 
     async def _present_list(self, url, category):
+        print(url)
         json_file = await _get_file(url)
         if json_file is not None:
             results = json_file['results']
@@ -325,11 +326,14 @@ class DND:
             pages = chat.pagify('\n'.join(package), delims=['\n'], escape=True, shorten_by=8, page_length=350)
             menu_pages = []
             for page in pages:
-                em=discord.Embed(color=COLORS[category], title=category, description=chat.box(page))
+                em=discord.Embed(color=COLORS[category.lower()], title=category, description=chat.box(page))
                 em.add_field(name='',value='Press ⏺ to select')
                 em.set_footer(text='From [dnd5eapi.co](http://www.dnd5eapi.co)',icon_url='http://www.dnd5eapi.co/public/favicon.ico')
                 menu_pages.append(em)
             return menu_pages
+        else:
+
+            await self.bot.say('json_file returned empty')
 
 async def _get_file(url):
     async with aiohttp.ClientSession() as session:
