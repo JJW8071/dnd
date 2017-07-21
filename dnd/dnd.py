@@ -9,71 +9,192 @@ from discord.ext import commands
 
 IMAGE_SEARCH = 'http://www.dnd.beyond.com/{}?filter-search={}'
 
-# schema=(
-#         'spells':(
-#             'name',
-#             'level',
-#             'casting_time',
-#             'range',
-#             'components',
-#             'duration',
-#             'school',
-#             'desc',
-#             'higher_level',
-#             'material',
-#             'ritual',
-#             'concentration',
-#             'classes',
-#             'subclasses',
-#             'phb',),
-#     'equipment':(
-#             'name',
-#             'cost',
-#             'damage',
-#             'weight',
-#             'properties',),
-#             'desc',
-#             'type',
-#             'subtype',
-#             'weapon_range'
-#             'weapon_category',
-#     'monsters':(
-#         'name',
-#         'size',
-#         'type',
-#         'subtype',
-#         'allignment',
-#         'strength',
-#         'dexterity',
-#         'constitution',
-#         'intelligence',
-#         'wisdom',
-#         'charisma',
-#         'challenge_rating',
-#         'armor_class',
-#         'hit_points',
-#         'hit_dice',
-#         'speed',
-#         'dexterity_save',
-#         'constitution_save',
-#         'wisdom_save',
-#         'charisma_save',
-#         'perception',
-#         'stealth',
-#         'damage_vulnerabilities',
-#         'damage_resistances',
-#         'damage_immunities',
-#         'condition_immunities',
-#         'senses',
-#         'languages',
-#         'special_abilities',
-#         'actions',
-#         'legendary_actions',
-#         ),
-#     'classes':(),
-#     'features':('level','class'),
-#     'races':(),
-#     )
+schema=(
+    'spells':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'level':'int'},
+        {'casting_time':'string'},
+        {'range':'string'},
+        {'components':'list'},
+        {'duration':'string'},
+        {'school':'dict'},
+        {'desc':'list'},
+        {'higher_level':'list'},
+        {'material':'string'},
+        {'ritual':'string'},
+        {'concentration':'string'},
+        {'classes':'listdict'},
+        {'subclasses':'listdict'},
+        {'page':'string'}),
+    'equipment':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'cost':'dict'},
+        {'damage':'dict'},
+        {'weight':'int'},
+        {'properties':'listdict'},
+        {'desc':'list'},
+        {'subtype':''},
+        {'type':'dict'}, # monster type is string
+        {'equipment_category':'string'},
+        {'gear_category':'string'},
+        {'armor_category':'string'},
+        {'armor_class':'dict'},
+        {'str_minimum':'int'},
+        {'stealth_disadvantage':'string'}, #really boolean
+        {'weapon_category':'string'},
+        {'weapon_range':'string'},
+        {'category_range':'string'},
+    ),
+    'classes':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'hit_die':'int'},
+        {'proficiency_choices':'listdict'},
+        {'proficiencies':'listdict'},
+        {'starting_equipment':'dict'},
+        {'saving_throws':'listdict'},
+        {'class_levels':'dict'},
+        {'subclasses':'listdict'},
+        {'features':'listdict'},
+        {'spellcasting':'dict'},
+        {'url':'string'},
+    ),
+    'subclasses':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'class':'dict'},
+        {'subclass_flavor':'string'},
+        {'desc':'string'},
+        {'features':'listdict'}
+    )
+    'monsters':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'size':'string'},
+        {'type':'string'},
+        {'subtype':'string'},
+        {'allignment':'string'},
+        {'strength':'int'},
+        {'dexterity':'int'},
+        {'constitution':'int'},
+        {'intelligence':'int'},
+        {'wisdom':'int'},
+        {'charisma':'int'},
+        {'challenge_rating':'int'},
+        {'armor_class':'int'},
+        {'hit_points':'int'},
+        {'hit_dice':'string'},
+        {'speed':'string'},
+        {'dexterity_save':'int'},
+        {'constitution_save':'int'},
+        {'wisdom_save':'int'},
+        {'charisma_save':'int'},
+        {'perception':'int'},
+        {'stealth':'int'},
+        {'damage_vulnerabilities':'string'},
+        {'damage_resistances':'string'},
+        {'damage_immunities':'string'},
+        {'condition_immunities':'string'},
+        {'senses':'string'},
+        {'languages':'string'},
+        {'special_abilities':'listdict'},
+        {'actions',:'listdict'}
+        {'legendary_actions':'listdict'},
+        ),
+    'features':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'level':'int'},
+        {'desc':'list'},
+        {'class':'dict'},
+        ),
+    'skills':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'desc':'list'},
+        {'ability_score':'dict'},
+        {'url':'string'},),
+    'proficiencies':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'classes':'listdict'},
+        {'races':'listdict'},
+        {'url':'string'},),
+    'languages': (
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'type':'string'},
+        {'typical_speakers':'list'},
+        {'script':'string'},
+        {'url':'string'},),
+    'spellcasting':(
+        {'id':'string'},
+        {'index':'int'},
+        {'spellcasting_ability':'dict'},
+        {'info':'listdict'},
+        {'url':'string'},
+        {'class':'dict'},),
+    'startingequipment':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'starting_equipment':'listdict'},
+        {'choices_to_make':'int'},
+        {'choice_1':'listdict'},
+        {'choice_2':'listdict'},
+        {'url':'string'},
+        {'class':'dict'},),
+    'levels':(
+        {'id':'string'},
+        {'index':'int'},
+        {'level':'int'},
+        {'ability_score_bonuses':'int'},
+        {'prof_bonus':'int'},
+        {'feature_choices':'listdict'},
+        {'features':'listdict'},
+        {'spellcasting':'object'},
+        {'class_specific':'object'},
+        {'class':'dict'},
+        {'url':'string'},),
+    'races':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'speed':'int'},
+        {'ability_bonuses':'list'},
+        {'allignment':'string'},
+        {'age':'string'},
+        {'size':'medium'},
+        {'size_description':'string'},
+        {'starting_proficiencies':'listdict'},
+        {'languages':'listdict'},
+        {'language_desc':'string'},
+        {'traits':'listdict'},
+        {'subraces':'listdict'},
+        {'url':'string'},),
+    'subraces':(
+        {'id':'string'},
+        {'index':'int'},
+        {'name':'string'},
+        {'race':'dict'},
+        {'desc':'string'},
+        {'ability_bonuses':'list'}
+        {'starting_proficiencies':'listdct'},
+        {'languages':'listdict'},
+        {'racial_traits':'listdict'},
+    )
+)
 
 COLORS = {
     'spells' : discord.Color.purple(),
@@ -278,6 +399,11 @@ class DND:
                 #             else:
                 #                 em.add_field(name=key2,value='something else detected')
                 # embeds.append(em)
+
+
+                listkeys = ('desc')
+                dictkeys = ('cost', 'damage', 'range' '2h_damage','armor_class')
+
                 for key in ('desc', 'actions','legendary_actions', 'higher_level'):
                     if key in keys:
                         if isinstance(json_file[key], list):
@@ -318,7 +444,6 @@ class DND:
                         return await self.bot.delete_message(message)
                     except:
                         pass
-
 
     async def _present_list(self, url, category):
         '''count = number of list items
