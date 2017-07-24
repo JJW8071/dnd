@@ -27,7 +27,7 @@ schema={
         {'concentration':'string'},
         {'classes':'listdict'},
         {'subclasses':'listdict'},
-        {'page':'string'}),
+        {'page':'string'},),
     'equipment':(
         {'id':'string'},
         {'index':'int'},
@@ -189,7 +189,7 @@ schema={
         {'name':'string'},
         {'race':'dict'},
         {'desc':'string'},
-        {'ability_bonuses':'list'}
+        {'ability_bonuses':'list'},
         {'starting_proficiencies':'listdct'},
         {'languages':'listdict'},
         {'racial_traits':'listdict'},
