@@ -71,8 +71,8 @@ schema={
         {'class':'dict'},
         {'subclass_flavor':'string'},
         {'desc':'string'},
-        {'features':'listdict'}
-    )
+        {'features':'listdict'},
+    ),
     'monsters':(
         {'id':'string'},
         {'index':'int'},
