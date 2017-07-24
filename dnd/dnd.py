@@ -48,8 +48,7 @@ schema={
         {'stealth_disadvantage':'string'}, #really boolean
         {'weapon_category':'string'},
         {'weapon_range':'string'},
-        {'category_range':'string'},
-    ),
+        {'category_range':'string'},),
     'classes':(
         {'id':'string'},
         {'index':'int'},
@@ -63,8 +62,7 @@ schema={
         {'subclasses':'listdict'},
         {'features':'listdict'},
         {'spellcasting':'dict'},
-        {'url':'string'},
-    ),
+        {'url':'string'},),
     'subclasses':(
         {'id':'string'},
         {'index':'int'},
@@ -72,8 +70,7 @@ schema={
         {'class':'dict'},
         {'subclass_flavor':'string'},
         {'desc':'string'},
-        {'features':'listdict'},
-    ),
+        {'features':'listdict'},),
     'monsters':(
         {'id':'string'},
         {'index':'int'},
@@ -297,7 +294,7 @@ class DND:
                 await self.bot.add_reaction(message, '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}')
             await self.bot.add_reaction(message, '\N{BLACK LEFT-POINTING TRIANGLE}')
             if choice is True:
-                await self.bot.add_reaction(message,'\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}')
+                await self.bot.add_reaction(message,'\N{SQUARED OK}')
             await self.bot.add_reaction(message, '\N{CROSS MARK}')
             await self.bot.add_reaction(message, '\N{BLACK RIGHT-POINTING TRIANGLE}')
             if length > 5:
@@ -311,7 +308,7 @@ class DND:
                                                                                         '\N{CROSS MARK}',
                                                                                         '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}',
                                                                                         '\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}',
-                                                                                        '\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}'])
+                                                                                        '\N{SQUARED OK}'])
         # if react.reaction.me == self.bot.user:
         #     react = await self.bot.wait_for_reaction(message=message, timeout=timeout,emoji=['\N{BLACK RIGHT-POINTING TRIANGLE}', '\N{BLACK LEFT-POINTING TRIANGLE}', '\N{CROSS MARK}', '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}', '\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}','\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}'])
         if react is None:
@@ -322,7 +319,7 @@ class DND:
                     await self.bot.remove_reaction(message,'\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}', self.bot.user) #rewind
                     await self.bot.remove_reaction(message, '\N{BLACK LEFT-POINTING TRIANGLE}', self.bot.user) #previous_page
                     await self.bot.remove_reaction(message, '\N{CROSS MARK}', self.bot.user) # Cancel
-                    await self.bot.remove_reaction(message,'\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}',self.bot.user) #choose
+                    await self.bot.remove_reaction(message,'\N{SQUARED OK}',self.bot.user) #choose
                     await self.bot.remove_reaction(message, '\N{BLACK RIGHT-POINTING TRIANGLE}', self.bot.user) #next_page
                     await self.bot.remove_reaction(message,'\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}', self.bot.user) # fast_forward
             except:
