@@ -9,7 +9,7 @@ from discord.ext import commands
 
 IMAGE_SEARCH = 'http://www.dnd.beyond.com/{}?filter-search={}'
 
-schema=(
+schema={
     'spells':(
         {'id':'string'},
         {'index':'int'},
@@ -193,8 +193,7 @@ schema=(
         {'starting_proficiencies':'listdct'},
         {'languages':'listdict'},
         {'racial_traits':'listdict'},
-    )
-)
+}
 
 COLORS = {
     'spells' : discord.Color.purple(),
