@@ -294,7 +294,7 @@ class DND:
                 await self.bot.add_reaction(message, '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}')
             await self.bot.add_reaction(message, '\N{BLACK LEFT-POINTING TRIANGLE}')
             if choice is True:
-                await self.bot.add_reaction(message,'\N{SQUARED OK}')
+                await self.bot.add_reaction(message,'\N{}')
             await self.bot.add_reaction(message, '\N{CROSS MARK}')
             await self.bot.add_reaction(message, '\N{BLACK RIGHT-POINTING TRIANGLE}')
             if length > 5:
@@ -343,7 +343,7 @@ class DND:
                 next_page = (page + 5) % len(embed_list)
                 # await self.bot.remove_reaction(message, '⬅', react.reaction.message.author)
                 return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
-            elif react.reaction.emoji == '\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}': #choose
+            elif react.reaction.emoji == '\N{SQUARED OK}': #choose
                 if choice is True:
                     # await self.bot.remove_reaction(message, '⏩', react.reaction.message.author)
                     prompt = await self.bot.say(SELECTION.format(category+' '))
