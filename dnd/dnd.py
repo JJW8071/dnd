@@ -105,7 +105,7 @@ schema={
         {'senses':'string'},
         {'languages':'string'},
         {'special_abilities':'listdict'},
-        {'actions',:'listdict'}
+        {'actions',:'listdict'},
         {'legendary_actions':'listdict'},
         ),
     'features':(
