@@ -194,7 +194,7 @@ schema={
         {'languages':'listdict'},
         {'racial_traits':'listdict'},
 }
-
+DEFAULTCOLOR=discord.Color.default()
 COLORS = {
     'spells' : discord.Color.purple(),
     'equipment': discord.Color.blue(),
@@ -288,57 +288,66 @@ class DND:
         """menu control logic for this taken from
            https://github.com/Lunar-Dust/Dusty-Cogs/blob/master/menu/menu.py"""
         print('list len = {}'.format(len(embed_list)))
-        em = embed_list[page]
         length = len(embed_list)
+        em = embed_list[page]
         if not message:
             message = await self.bot.say(embed=em)
             if length > 5:
-                await self.bot.add_reaction(message, "⏪")
-            await self.bot.add_reaction(message, "◀")
+                await self.bot.add_reaction(message, '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}')
+            await self.bot.add_reaction(message, '\N{BLACK LEFT-POINTING TRIANGLE}')
             if choice is True:
-                await self.bot.add_reaction(message,"⏺")
-            await self.bot.add_reaction(message, "❌")
-            await self.bot.add_reaction(message, "▶")
+                await self.bot.add_reaction(message,'\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}')
+            await self.bot.add_reaction(message, '\N{CROSS MARK}')
+            await self.bot.add_reaction(message, '\N{BLACK RIGHT-POINTING TRIANGLE}')
             if length > 5:
-                await self.bot.add_reaction(message, "⏩")
+                await self.bot.add_reaction(message, '\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}')
         else:
             message = await self.bot.edit_message(message, embed=em)
-        react = await self.bot.wait_for_reaction(message=message, user=ctx.message.author, timeout=timeout,emoji=["▶", "◀", "❌", "⏪", "⏩","⏺"])
+        await asyncio.sleep(1)
+
+        react = await self.bot.wait_for_reaction(message=message, timeout=timeout,emoji=['\N{BLACK RIGHT-POINTING TRIANGLE}',
+                                                                                        '\N{BLACK LEFT-POINTING TRIANGLE}',
+                                                                                        '\N{CROSS MARK}',
+                                                                                        '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}',
+                                                                                        '\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}',
+                                                                                        '\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}'])
+        # if react.reaction.me == self.bot.user:
+        #     react = await self.bot.wait_for_reaction(message=message, timeout=timeout,emoji=['\N{BLACK RIGHT-POINTING TRIANGLE}', '\N{BLACK LEFT-POINTING TRIANGLE}', '\N{CROSS MARK}', '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}', '\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}','\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}'])
         if react is None:
             try:
                 try:
                     await self.bot.clear_reactions(message)
                 except:
-                    await self.bot.remove_reaction(message,"⏪", self.bot.user) #rewind
-                    await self.bot.remove_reaction(message, "◀", self.bot.user) #previous_page
-                    await self.bot.remove_reaction(message, "❌", self.bot.user) # Cancel
-                    await self.bot.remove_reaction(message,"⏺",self.bot.user) #choose
-                    await self.bot.remove_reaction(message, "▶", self.bot.user) #next_page
-                    await self.bot.remove_reaction(message,"⏩", self.bot.user) # fast_forward
+                    await self.bot.remove_reaction(message,'\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}', self.bot.user) #rewind
+                    await self.bot.remove_reaction(message, '\N{BLACK LEFT-POINTING TRIANGLE}', self.bot.user) #previous_page
+                    await self.bot.remove_reaction(message, '\N{CROSS MARK}', self.bot.user) # Cancel
+                    await self.bot.remove_reaction(message,'\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}',self.bot.user) #choose
+                    await self.bot.remove_reaction(message, '\N{BLACK RIGHT-POINTING TRIANGLE}', self.bot.user) #next_page
+                    await self.bot.remove_reaction(message,'\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}', self.bot.user) # fast_forward
             except:
                 pass
             return None
         elif react is not None:
-            react = react.reaction.emoji
-            if react == "▶": #next_page
+            # react = react.reaction.emoji
+            if react.reaction.emoji == '\N{BLACK RIGHT-POINTING TRIANGLE}': #next_page
                 next_page = (page + 1) % len(embed_list)
-                await self.bot.remove_reaction(message, '➡', ctx.message.author)
+                # await self.bot.remove_reaction(message, '▶', react.reaction.message.author)
                 return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
-            elif react == "◀": #previous_page
+            elif react.reaction.emoji == '\N{BLACK LEFT-POINTING TRIANGLE}': #previous_page
                 next_page = (page - 1) % len(embed_list)
-                await self.bot.remove_reaction(message, '⬅', ctx.message.author)
+                # await self.bot.remove_reaction(message, '⬅', react.reaction.message.author)
                 return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
-            elif react == "⏪": #rewind
+            elif react.reaction.emoji == '\N{BLACK LEFT-POINTING DOUBLE TRIANGLE}': #rewind
                 next_page = (page - 5) % len(embed_list)
-                await self.bot.remove_reaction(message, '⏪', ctx.message.author)
+                # await self.bot.remove_reaction(message, '⏪', react.reaction.message.author)
                 return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
-            elif react == "⏩": # fast_forward
+            elif react.reaction.emoji == '\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE}': # fast_forward
                 next_page = (page + 5) % len(embed_list)
-                await self.bot.remove_reaction(message, '⬅', ctx.message.author)
+                # await self.bot.remove_reaction(message, '⬅', react.reaction.message.author)
                 return await self.pages_menu(ctx, embed_list, message=message, page=next_page, timeout=timeout)
-            elif react == "⏺": #choose
+            elif react.reaction.emoji == '\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}': #choose
                 if choice is True:
-                    await self.bot.remove_reaction(message, '⏩', ctx.message.author)
+                    # await self.bot.remove_reaction(message, '⏩', react.reaction.message.author)
                     prompt = await self.bot.say(SELECTION.format(category+' '))
                     answer = await self.bot.wait_for_message(timeout=10, author=ctx.message.author)
                     if answer is not None:
@@ -347,6 +356,8 @@ class DND:
                         url = '{}{}/{}'.format(BASEURL,category,answer.content.lower().strip())
                         await self._process_item(ctx, url=url, category=category)
                         await self.bot.delete_message(prompt)
+                else:
+                    pass
             else:
                 try:
                     return await self.bot.delete_message(message)
@@ -355,6 +366,10 @@ class DND:
 
     async def _process_item(self, ctx=None, url=None, category=None):
         print('process_item')
+        if category.lower() in COLORS:
+            COLOR = COLORS[category.lower()]
+        else:
+            COLOR = discord.Color.default()
         json_file = await _get_file(url)
         if 'count' in json_file:
             await self._process_category(ctx=ctx, url=url, category=category)
@@ -367,11 +382,11 @@ class DND:
                     await self.pages_menu(ctx, menu_pages, CATEGORY, message=None, page=0, timeout=30)
                 else:
                     print('menu_pages is None')
-            elif category.lower() in COLORS: #process endpoint
-                category=category.lower()
+            # elif category.lower() in COLORS: #process endpoint
+                # category=category.lower()
                 img_available = ['monsters', 'equipment',]
                 embeds = []
-                em = discord.Embed(color=COLORS[category],title=json_file['name'])
+                em = discord.Embed(color=COLOR,title=json_file['name'])
                 if category in img_available:
                     name = json_file['name']
                     if category == 'equipment':
@@ -379,7 +394,7 @@ class DND:
                     else:
                         gettype = json_file['type']
                         try:
-                            em.set_image(url=await self.image_search(category,name.lower(),gettype))
+                            em.set_image(url=await self.image_search(category.lower(),name.lower(),gettype))
                         except:
                             print('cannot find image')
                 ##
