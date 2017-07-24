@@ -1,5 +1,6 @@
 import discord
 import aiohttp
+import asyncio
 import json
 import bs4
 from bs4 import BeautifulSoup
