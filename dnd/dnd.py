@@ -192,7 +192,7 @@ schema={
         {'ability_bonuses':'list'},
         {'starting_proficiencies':'listdct'},
         {'languages':'listdict'},
-        {'racial_traits':'listdict'},
+        {'racial_traits':'listdict'},),
 }
 DEFAULTCOLOR=discord.Color.default()
 COLORS = {
